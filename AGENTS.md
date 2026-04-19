@@ -486,3 +486,97 @@ This file evolves with the system. Update as you learn.
 ---
 
 **Show, don't tell. Let the system's work speak for itself.**
+
+---
+
+## Health & Quality Monitoring (@monitor Capability)
+
+**Implementation:** Lightweight monitoring using existing 3-agent system (no new agents)  
+**Schedule:** Daily at 22:30 (before 23:00 progression script)  
+**Script:** `/workspace/tools/automated-health-monitor.sh`
+
+### What Gets Monitored (17 Checks)
+
+**1. Vector Retriever Health (3 checks)**
+- File exists and recent (<7 days)
+- Cache status and size
+- Query speed (target: <0.2s, current: 0.033s)
+
+**2. Prompt File Drift (2 checks)**
+- AGENTS.md size (≥400 lines)
+- AGENTS.md currency (≤7 days since update)
+
+**3. Memory Component (4 checks)**
+- Daily logs count (≥1)
+- Today's log exists
+- MEMORY.md size (≥400 lines)
+- Curation protocol documented
+
+**4. Quality Equation (3 checks)**
+- Overall quality (≥8.5/10, current: 9.26)
+- Prompt files (≥9.0/10, current: 9.13)
+- Memory component (≥9.0/10, current: 9.13)
+
+**5. Secret Scan (2 checks)**
+- MEMORY.md clean (no API keys)
+- Archives clean (no secrets in recent files)
+
+**6. Browser Tool (1 check)**
+- Documented in AGENTS.md
+
+**7. Agent System (2 checks)**
+- Agent count (3 = lean architecture)
+- Agent router available
+
+### Status Levels
+
+**✅ PASS:** All critical checks passed, minor warnings only  
+**⚠️ WARNING:** Non-critical issues detected, recommendations provided  
+**🔴 FAIL:** Critical issues require immediate attention
+
+### Daily Report
+
+**Location:** `/workspace/health-report-YYYY-MM-DD.md`
+
+**Contents:**
+- Summary table (17 checks with status/value/threshold)
+- Overall status and statistics
+- Quality Equation calculation
+- Recommendations (auto-generated based on findings)
+
+**Integration:**
+- Report included in JOURNEY.md by daily progression script
+- Latest status visible in README.md
+
+### Usage
+
+**Manual Run:**
+```bash
+cd /Users/rohitvashist/.openclaw/workspace
+bash tools/automated-health-monitor.sh
+```
+
+**Automated:**
+- Runs daily at 22:30
+- No configuration needed
+- Uses existing 3 agents (Switch, QualityGuardian, Content)
+
+**Review:**
+- Check `health-report-YYYY-MM-DD.md` daily
+- Address warnings within 7 days
+- Address failures immediately
+
+### Maintenance
+
+**Weekly:**
+- Review health trends
+- Address accumulated warnings
+- Update thresholds if needed
+
+**Monthly:**
+- Audit monitoring effectiveness
+- Adjust checks based on system evolution
+- Document patterns or recurring issues
+
+**No New Agents:** Uses existing Switch agent (@monitor capability) with existing tools
+
