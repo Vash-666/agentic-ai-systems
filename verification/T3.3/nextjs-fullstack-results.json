@@ -1,0 +1,97 @@
+{"template": "nextjs-fullstack", "iterations": [
+{
+  "iteration": 1,
+  "project_name": "test-nextjs-fullstack-1",
+  "template": "nextjs-fullstack",
+  "timing": {
+    "generation_ms": 40,
+    "install_ms": 8623,
+    "total_ms": 8663
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+,
+{
+  "iteration": 2,
+  "project_name": "test-nextjs-fullstack-2",
+  "template": "nextjs-fullstack",
+  "timing": {
+    "generation_ms": 40,
+    "install_ms": 20727,
+    "total_ms": 20767
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+,
+{
+  "iteration": 3,
+  "project_name": "test-nextjs-fullstack-3",
+  "template": "nextjs-fullstack",
+  "timing": {
+    "generation_ms": 39,
+    "install_ms": 5677,
+    "total_ms": 5716
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+,
+{
+  "iteration": 4,
+  "project_name": "test-nextjs-fullstack-4",
+  "template": "nextjs-fullstack",
+  "timing": {
+    "generation_ms": 45,
+    "install_ms": 5592,
+    "total_ms": 5637
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+,
+{
+  "iteration": 5,
+  "project_name": "test-nextjs-fullstack-5",
+  "template": "nextjs-fullstack",
+  "timing": {
+    "generation_ms": 42,
+    "install_ms": 5546,
+    "total_ms": 5588
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+
+]}

@@ -1,0 +1,97 @@
+{"template": "express-react", "iterations": [
+{
+  "iteration": 1,
+  "project_name": "test-express-react-1",
+  "template": "express-react",
+  "timing": {
+    "generation_ms": 49,
+    "install_ms": 4114,
+    "total_ms": 4163
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+,
+{
+  "iteration": 2,
+  "project_name": "test-express-react-2",
+  "template": "express-react",
+  "timing": {
+    "generation_ms": 43,
+    "install_ms": 4115,
+    "total_ms": 4158
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+,
+{
+  "iteration": 3,
+  "project_name": "test-express-react-3",
+  "template": "express-react",
+  "timing": {
+    "generation_ms": 41,
+    "install_ms": 4100,
+    "total_ms": 4141
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+,
+{
+  "iteration": 4,
+  "project_name": "test-express-react-4",
+  "template": "express-react",
+  "timing": {
+    "generation_ms": 44,
+    "install_ms": 4143,
+    "total_ms": 4187
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+,
+{
+  "iteration": 5,
+  "project_name": "test-express-react-5",
+  "template": "express-react",
+  "timing": {
+    "generation_ms": 42,
+    "install_ms": 4130,
+    "total_ms": 4172
+  },
+  "quality": {
+    "typescript": 2,
+    "eslint": 2,
+    "build": 2,
+    "structure": 2,
+    "dependencies": 2,
+    "total": 10
+  }
+}
+
+]}

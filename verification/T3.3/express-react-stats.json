@@ -1,0 +1,17 @@
+{
+  "template": "express-react",
+  "iterations": 5,
+  "timing_ms": {
+    "average": 4164.2,
+    "min": 4141,
+    "max": 4187,
+    "target": 130000,
+    "pass": true
+  },
+  "quality": {
+    "average_score": 10.0,
+    "target": 9.0,
+    "pass": true
+  },
+  "overall_pass": true
+}
