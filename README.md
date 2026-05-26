@@ -1,7 +1,7 @@
 # Vash's OpenClaw Workspace
 
 **Owner:** Rohit Vashist (Vash)  
-**Role:** Principal Business Analyst @ GSA | Certified Ethereum Expert  
+**Role:** Product Builder | Certified Ethereum Expert | Tokenization | Smart contracts   
 **Focus:** Building production-ready multi-agent AI systems
 
 ---
