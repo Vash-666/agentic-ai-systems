@@ -1,8 +1,8 @@
 {
-  "version": "1.1",
-  "updated": "2026-05-04T19:26:00.000000",
+  "version": "1.2",
+  "updated": "2026-05-26T16:15:00.000000",
   "protocol": "Multi-Agent Routing Protocol v1.0",
-  "changelog": "2026-05-04: Switched @switch default model to moonshot/kimi-k2.5 | 2026-04-18: Quality Cut - Consolidated ScriptCraft + SocialMediaMaster into Content agent | 2026-04-18: Added @grok bridge agent for xAI Grok API | 2026-04-18: Added preferred_model fields for all agents",
+  "changelog": "2026-05-26: Streamlined agent naming — qualityguardian → quality for consistency. All 7 agents now use standardized handles: @switch, @content, @quality, @grok, @product, @scaffolder, @ux. | 2026-05-26: Added @uxarchitect to agent-directory.json — UX Architect now fully integrated. Grok CLI OAuth authentication completed. Quality Cut cron scheduled. | 2026-05-26: Added native Grok CLI 0.1.220 integration for @grok — native grok binary now available at ~/.grok/bin/grok (symlink ~/.local/bin/grok). Updated @grok usage with CLI invocation options and XAI_API_KEY env var support. | 2026-05-12: Updated agent models - @content → google/gemini-2.5-flash, @grok → xai/grok-4.20-reasoning, @product → deepseek/deepseek-chat, @scaffolder → moonshot/kimi-k2.5 | 2026-05-04: Switched @switch default model to moonshot/kimi-k2.5 | 2026-04-18: Quality Cut - Consolidated ScriptCraft + SocialMediaMaster into Content agent | 2026-04-18: Added @grok bridge agent for xAI Grok API | 2026-04-18: Added preferred_model fields for all agents",
   "agents": {
     "switch": {
       "id": "main",
@@ -54,7 +54,7 @@
         "creator"
       ],
       "role": "Unified Content Creation Agent",
-      "model": "anthropic/claude-sonnet-4-5",
+      "model": "google/gemini-2.5-flash",
       "default": false,
       "channels": [
         "webchat",
@@ -117,11 +117,11 @@
         "quality_score": 8.4,
         "readiness": "active"
       },
-      "preferred_model": "anthropic/claude-sonnet-4-5"
+      "preferred_model": "google/gemini-2.5-flash"
     },
-    "qualityguardian": {
-      "id": "qualityguardian",
-      "name": "QualityGuardian",
+    "quality": {
+      "id": "quality",
+      "name": "Quality",
       "handle": "@quality",
       "aliases": [
         "audit",
@@ -185,7 +185,7 @@
         "deep-think"
       ],
       "role": "Secure xAI Grok API Bridge",
-      "model": "anthropic/claude-sonnet-4-5",
+      "model": "xai/grok-4.20-reasoning",
       "default": false,
       "channels": [
         "webchat",
@@ -200,11 +200,11 @@
         "code_review",
         "ethical_analysis"
       ],
-      "description": "Secure bridge to xAI Grok API for complex reasoning, analysis, and creative tasks. API key stored securely in .env file.",
+      "description": "Secure bridge to xAI Grok API for complex reasoning, analysis, and creative tasks. API key stored securely in .env file. Native Grok CLI 0.1.220 installed at ~/.grok/bin/grok for interactive/headless use.",
       "created": "2026-04-18",
-      "last_active": "2026-04-18T22:10:00.000000",
+      "last_active": "2026-05-26T10:26:00.000000",
       "security": {
-        "api_key_storage": ".env file (gitignored)",
+        "api_key_storage": ".env file (gitignored) or XAI_API_KEY env var",
         "permissions": "600 (owner read/write only)",
         "logging": "grok-bridge-log.md",
         "audit": "automatic per call"
@@ -215,19 +215,49 @@
           "grok-4.20",
           "grok-4.20-vision",
           "grok-4.20-code"
+        ],
+        "cli_models": [
+          "grok-build-latest"
+        ]
+      },
+      "cli": {
+        "binary": "/Users/rohitvashist/.grok/bin/grok",
+        "symlink": "/Users/rohitvashist/.local/bin/grok",
+        "version": "0.1.220",
+        "auth": "pending — run 'grok login' or 'grok login --device-auth' or set XAI_API_KEY",
+        "auth_methods": [
+          "grok login (browser)",
+          "grok login --device-auth (headless)",
+          "grok login --oauth (OAuth)",
+          "XAI_API_KEY env var"
+        ],
+        "features": [
+          "Full file read/write/edit",
+          "Shell command execution",
+          "Web search/fetch",
+          "Session management (save/resume)",
+          "Subagent spawning",
+          "Project-aware (AGENTS.md/CLAUDE.md)",
+          "Sandbox mode (--sandbox)",
+          "MCP server support",
+          "Agent Client Protocol (ACP) stdio/WebSocket"
         ]
       },
       "usage": {
         "direct_call": "@grok \"Your question\"",
         "model_override": "@grok --model grok-4.20-code \"Your question\"",
-        "script": "bash /workspace/tools/grok-bridge.sh \"Your question\""
+        "script": "bash /workspace/tools/grok-bridge.sh \"Your question\"",
+        "native_cli": "grok -p \"Your question\" (for single-turn scripting)",
+        "native_interactive": "grok (opens full TUI)",
+        "native_agent": "grok agent headless -p \"prompt\" (full tool access)"
       },
       "integration": {
         "with_switch": "Route complex reasoning tasks",
         "with_quality": "Deep quality analysis",
-        "with_content": "Creative content generation"
+        "with_content": "Creative content generation",
+        "cli_notes": "When authenticated, native grok CLI offers richer responses with full tool access vs lightweight grok-bridge.sh API calls"
       },
-      "preferred_model": "anthropic/claude-sonnet-4-5"
+      "preferred_model": "xai/grok-4.20-reasoning"
     },
     "product": {
       "id": "product",
@@ -240,7 +270,7 @@
         "planning"
       ],
       "role": "Backlog & Roadmap Owner",
-      "model": "anthropic/claude-sonnet-4-5",
+      "model": "deepseek/deepseek-chat",
       "default": false,
       "channels": [
         "webchat"
@@ -257,7 +287,7 @@
       "description": "Product Manager - owns backlog and roadmap, plans daily sprints, measures value delivered",
       "created": "2026-04-20",
       "last_active": "2026-04-20T11:58:00.000000",
-      "preferred_model": "anthropic/claude-sonnet-4-5"
+      "preferred_model": "deepseek/deepseek-chat"
     },
     "scaffolder": {
       "id": "scaffolder",
@@ -270,7 +300,7 @@
         "project-builder"
       ],
       "role": "Project Scaffolding Engine",
-      "model": "anthropic/claude-sonnet-4-5",
+      "model": "moonshot/kimi-k2.5",
       "default": false,
       "channels": [
         "webchat"
@@ -286,7 +316,7 @@
       "description": "Project Scaffolding Engine - generates complete project structures from templates with validation and quality assurance",
       "created": "2026-04-20",
       "last_active": "2026-04-20T13:05:00.000000",
-      "preferred_model": "anthropic/claude-sonnet-4-5",
+      "preferred_model": "moonshot/kimi-k2.5",
       "success_metrics": {
         "scaffolding_time": "< 2 minutes",
         "success_rate": "≥ 95%",
@@ -302,6 +332,51 @@
         "with_quality": "Quality validation and security checks",
         "with_content": "Documentation and tracking",
         "with_product": "Requirements and prioritization"
+      }
+    },
+    "uxarchitect": {
+      "id": "uxarchitect",
+      "name": "UXArchitect",
+      "handle": "@ux",
+      "aliases": [
+        "ux",
+        "design",
+        "architect",
+        "experience"
+      ],
+      "role": "UX Architect & Conversion Specialist",
+      "model": "anthropic/claude-sonnet-4-5",
+      "default": false,
+      "channels": [
+        "webchat"
+      ],
+      "status": "active",
+      "quality": 8.7,
+      "skills": [
+        "ux_design",
+        "conversion_optimization",
+        "mobile_first_design",
+        "accessibility",
+        "user_testing",
+        "trust_signals",
+        "friction_elimination"
+      ],
+      "description": "UX Architect focused on conversion-optimized website design for local service businesses. Ensures generated websites convert visitors into customers through mobile-first, accessible, trust-driven design.",
+      "created": "2026-05-24",
+      "last_active": "2026-05-24T13:26:00.000000",
+      "preferred_model": "anthropic/claude-sonnet-4-5",
+      "project": "website-business",
+      "success_metrics": {
+        "conversion_rate": "3-5%",
+        "mobile_bounce_rate": "< 50%",
+        "page_load_time": "< 3 seconds",
+        "accessibility_violations": 0
+      },
+      "collaboration": {
+        "with_scaffolder": "Review templates and provide UX feedback",
+        "with_product": "Prioritize features based on UX impact",
+        "with_quality": "Define UX validation criteria",
+        "with_content": "Optimize copy placement for conversion"
       }
     }
   },
