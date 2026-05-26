@@ -1737,11 +1737,38 @@ bash tools/model-consistency-check.sh agent:quality:subagent:session-id
 
 ### **Quick Reference:**
 
-**Always Do:**
-1. `model=agent.preferred_model` in spawn calls
-2. `session_status` verification after spawn
-3. Header shows actual runtime model
-4. Log mismatches for debugging
+**RECOMMENDED: Use spawnAgent helper with automatic lookup:**
+```typescript
+import { spawnAgent } from '../lib/spawn-agent';
+
+// Automatically uses correct model from agent-directory.json
+await spawnAgent({
+  agentId: "grok",           // Uses xai/grok-4.20-reasoning
+  task: "Research...",
+  taskName: "research_task"
+});
+```
+
+**Legacy: Manual model specification (NOT RECOMMENDED):**
+```typescript
+// Must specify model explicitly
+sessions_spawn({
+  agentId: "grok",
+  model: "xai/grok-4.20-reasoning",  // Required!
+  task: "..."
+})
+```
+
+**Agent-Model Mappings:**
+| Agent | Model |
+|-------|-------|
+| @switch | moonshot/kimi-k2.5 |
+| @content | google/gemini-2.5-flash |
+| @quality | anthropic/claude-sonnet-4-5 |
+| @grok | xai/grok-4.20-reasoning |
+| @product | deepseek/deepseek-chat |
+| @scaffolder | moonshot/kimi-k2.5 |
+| @ux | anthropic/claude-sonnet-4-5 |
 
 **Never Do:**
 1. Rely on default inheritance
@@ -1751,13 +1778,14 @@ bash tools/model-consistency-check.sh agent:quality:subagent:session-id
 
 ### **Compliance Checklist:**
 
-- [ ] All spawn calls include `model=agent.preferred_model`
+- [x] Automatic model lookup from agent-directory.json (NEW v3.0)
+- [x] spawnAgent helper for all spawns (NEW v3.0)
 - [ ] Headers show actual runtime model (verified)
 - [ ] Model consistency checker runs after spawns
 - [ ] Mismatches logged and addressed
-- [ ] Documentation updated with Protocol v2.1
+- [ ] Documentation updated with Protocol v3.0
 
 ---
 
-**Protocol v2.1 ensures:** Correct model usage per agent specialty, accurate headers, and consistent quality across the 3-agent system.
+**Protocol v3.0 ensures:** Automatic model selection, zero manual errors, consistent quality across all 7 agents.
 
