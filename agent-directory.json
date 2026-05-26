@@ -1,8 +1,8 @@
 {
   "version": "1.1",
-  "updated": "2026-05-04T19:26:00.000000",
+  "updated": "2026-04-18T19:15:00.000000",
   "protocol": "Multi-Agent Routing Protocol v1.0",
-  "changelog": "2026-05-04: Switched @switch default model to moonshot/kimi-k2.5 | 2026-04-18: Quality Cut - Consolidated ScriptCraft + SocialMediaMaster into Content agent | 2026-04-18: Added @grok bridge agent for xAI Grok API | 2026-04-18: Added preferred_model fields for all agents",
+  "changelog": "2026-05-24: Added @ux agent for website-business project | 2026-04-18: Quality Cut - Consolidated ScriptCraft + SocialMediaMaster into Content agent | 2026-04-18: Added @grok bridge agent for xAI Grok API | 2026-04-18: Added preferred_model fields for all agents",
   "agents": {
     "switch": {
       "id": "main",
@@ -16,7 +16,7 @@
         "boss"
       ],
       "role": "Chief Orchestrator",
-      "model": "moonshot/kimi-k2.5",
+      "model": "deepseek/deepseek-chat",
       "default": true,
       "channels": [
         "webchat",
@@ -33,8 +33,8 @@
       ],
       "description": "Primary agent for coordination, strategy, and default routing",
       "created": "2026-02-25",
-      "last_active": "2026-05-04T19:26:00.000000",
-      "preferred_model": "moonshot/kimi-k2.5"
+      "last_active": "2026-04-18T19:15:00.000000",
+      "preferred_model": "deepseek/deepseek-chat"
     },
     "content": {
       "id": "content",
@@ -54,7 +54,7 @@
         "creator"
       ],
       "role": "Unified Content Creation Agent",
-      "model": "anthropic/claude-sonnet-4-5",
+      "model": "google/gemini-2.5-flash",
       "default": false,
       "channels": [
         "webchat",
@@ -82,7 +82,7 @@
         "SocialMediaMaster (8.3/10)"
       ],
       "consolidation_date": "2026-04-18",
-      "brand_position": "The guy who actually builds and documents agentic AI systems from scratch — transparent, practical, and recruiter-ready",
+      "brand_position": "The guy who actually builds and documents agentic AI systems from scratch \u2014 transparent, practical, and recruiter-ready",
       "content_guidelines": "Build in public, show process including mistakes, professional yet approachable tone, no hype, teach Quality Equation and small-company model",
       "target_audience": "Recruiters/hiring managers + technical professionals learning agentic AI",
       "workflow": {
@@ -117,7 +117,7 @@
         "quality_score": 8.4,
         "readiness": "active"
       },
-      "preferred_model": "anthropic/claude-sonnet-4-5"
+      "preferred_model": "google/gemini-2.5-flash"
     },
     "qualityguardian": {
       "id": "qualityguardian",
@@ -146,16 +146,16 @@
         "root_cause_analysis",
         "quality_optimization"
       ],
-      "description": "Dedicated quality assurance agent with mathematical rigor. Operates on Quality In → Quality Out principle with vector-based validation. Optimized with chunking strategy for complex evaluations.",
+      "description": "Dedicated quality assurance agent with mathematical rigor. Operates on Quality In \u2192 Quality Out principle with vector-based validation. Optimized with chunking strategy for complex evaluations.",
       "created": "2026-04-16",
       "last_active": "2026-04-18T19:04:00.000000",
       "optimized": "2026-04-18",
-      "core_value": "Ruthless pursuit of Quality In → Quality Out",
-      "methodology": "Vector embeddings, similarity scoring (≥0.92 good, <0.85 needs improvement), statistical validation, drift detection, Quality Equation optimization",
+      "core_value": "Ruthless pursuit of Quality In \u2192 Quality Out",
+      "methodology": "Vector embeddings, similarity scoring (\u22650.92 good, <0.85 needs improvement), statistical validation, drift detection, Quality Equation optimization",
       "quality_thresholds": {
         "similarity_score": 0.92,
         "quality_equation": 8.5,
-        "context_preservation": 1,
+        "context_preservation": 1.0,
         "token_efficiency": "optimized"
       },
       "audit_schedule": {
@@ -185,14 +185,14 @@
         "deep-think"
       ],
       "role": "Secure xAI Grok API Bridge",
-      "model": "anthropic/claude-sonnet-4-5",
+      "model": "grok-4.20-reasoning",
       "default": false,
       "channels": [
         "webchat",
         "telegram"
       ],
       "status": "active",
-      "quality": 9,
+      "quality": 9.0,
       "skills": [
         "complex_reasoning",
         "deep_analysis",
@@ -227,7 +227,7 @@
         "with_quality": "Deep quality analysis",
         "with_content": "Creative content generation"
       },
-      "preferred_model": "anthropic/claude-sonnet-4-5"
+      "preferred_model": "grok-4.20-reasoning"
     },
     "product": {
       "id": "product",
@@ -246,7 +246,7 @@
         "webchat"
       ],
       "status": "active",
-      "quality": 9,
+      "quality": 9.0,
       "skills": [
         "backlog_management",
         "roadmap_planning",
@@ -259,50 +259,52 @@
       "last_active": "2026-04-20T11:58:00.000000",
       "preferred_model": "anthropic/claude-sonnet-4-5"
     },
-    "scaffolder": {
-      "id": "scaffolder",
-      "name": "Scaffolder",
-      "handle": "@scaffolder",
+    "uxarchitect": {
+      "id": "uxarchitect",
+      "name": "UXArchitect",
+      "handle": "@ux",
       "aliases": [
-        "scaffold",
-        "generator",
-        "template",
-        "project-builder"
+        "ux",
+        "design",
+        "experience",
+        "usability",
+        "conversion",
+        "cro"
       ],
-      "role": "Project Scaffolding Engine",
-      "model": "anthropic/claude-sonnet-4-5",
+      "role": "User Experience & Template Optimization Specialist",
+      "model": "google/gemini-2.5-flash",
       "default": false,
       "channels": [
         "webchat"
       ],
       "status": "active",
-      "quality": 9,
+      "quality": 8.5,
       "skills": [
-        "project_generation",
-        "template_management",
-        "quality_validation",
-        "performance_optimization"
+        "ux_audit",
+        "conversion_optimization",
+        "mobile_design",
+        "accessibility",
+        "user_research",
+        "local_service_ux",
+        "cro"
       ],
-      "description": "Project Scaffolding Engine - generates complete project structures from templates with validation and quality assurance",
-      "created": "2026-04-20",
-      "last_active": "2026-04-20T13:05:00.000000",
-      "preferred_model": "anthropic/claude-sonnet-4-5",
-      "success_metrics": {
-        "scaffolding_time": "< 2 minutes",
-        "success_rate": "≥ 95%",
-        "code_quality": "≥ 9.0/10",
-        "vulnerability_free_rate": "≥ 98%"
-      },
-      "templates": [
-        "nextjs-fullstack",
-        "express-react"
+      "description": "Owns user experience for website-business project templates. Ensures generated local service websites convert visitors into customers.",
+      "created": "2026-05-24",
+      "last_active": "2026-05-24T13:30:00.000000",
+      "project": "website-business",
+      "focus": "End-user experience of generated websites (not internal tools)",
+      "target_audiences": [
+        "Local customers needing service (Primary)",
+        "Researchers comparing options (Secondary)",
+        "Referrals from AI/word-of-mouth (Tertiary)"
       ],
-      "integration": {
-        "with_switch": "Lead development and execution",
-        "with_quality": "Quality validation and security checks",
-        "with_content": "Documentation and tracking",
-        "with_product": "Requirements and prioritization"
-      }
+      "key_metrics": [
+        "3-5% contact form conversion",
+        "8-12% phone click-through",
+        "<3 second mobile load time",
+        "<50% mobile bounce rate"
+      ],
+      "preferred_model": "google/gemini-2.5-flash"
     }
   },
   "routing": {
