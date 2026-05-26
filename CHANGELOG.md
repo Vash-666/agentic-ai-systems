@@ -28,7 +28,7 @@ Format: [VERSION] Category — Description
 - ✅ Primordial icons with animations
 - ✅ Scroll-triggered reveals
 - ✅ Pushed to GitHub main branch
-- ⏳ Pending: Custom domain setup
+- ✅ **LIVE at https://vash1st.com**
 
 ### FEATURE — Website Creator Skill
 - Created 9-step website building workflow

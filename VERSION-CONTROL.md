@@ -77,7 +77,7 @@ GitHub Repos: 5 synced
 ### Coming Next (v2.1.0)
 - ⏳ Trophy photos to IPFS
 - ⏳ Final NFT mint with real metadata
-- ⏳ vash1st.com custom domain setup
+- ✅ vash1st.com live at https://vash1st.com (DEPLOYED)
 - ⏳ Agent performance dashboards
 
 ---
