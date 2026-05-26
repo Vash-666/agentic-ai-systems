@@ -6,14 +6,15 @@
 
 ---
 
-## 🎯 Current System Status (2026-05-09)
+## 🎯 Current System Status (2026-05-26)
 
-**Quality:** 8.79/10 (above 8.5 target)  
+**Quality:** 8.9/10 (above 8.5 target)  
 **Context Preservation:** 100%  
 **Cost Savings:** 88% (DeepSeek 80% / Sonnet 20% routing)  
-**Active Agents:** 6 total (3 core active: Switch, QualityGuardian, Content; 3 support: Grok Bridge, Product Manager, Scaffolder)  
-**Architecture:** Lean post-Quality Cut v1.1 (3 core agents handle 80% of work)  
-**Infrastructure:** 15 production-grade components deployed
+**Active Agents:** 7 total — All operational
+**Architecture:** Streamlined v2.0.0 with consistent naming  
+**Infrastructure:** Production-grade components deployed  
+**Version:** v2.0.0 "Significant Progress"
 
 ---
 
@@ -140,23 +141,17 @@
 
 The system operates with **3 core active agents** handling day-to-day operations, supported by **3 specialized agents** for specific functions.
 
-#### Core Active Agents (The "Lean Trio")
+#### All 7 Agents (v2.0.0 Streamlined)
 
-These three agents handle 80%+ of all tasks through smart routing:
-
-| Agent | Handle | Role | Model | Primary Function |
-|-------|--------|------|-------|------------------|
-| **Switch** | @switch | Chief Orchestrator | Kimi K2.5 | Multi-agent coordination, routing, strategy |
-| **QualityGuardian** | @quality | Quality Auditor | Claude Sonnet 4.5 | Quality audits, similarity scoring, validation |
-| **Content** | @content | Content Creator | Claude Sonnet 4.5 | GitHub showcases, scripts, social media, docs |
-
-#### Support Agents (Specialized Functions)
-
-| Agent | Handle | Role | Model | Primary Function |
-|-------|--------|------|-------|------------------|
-| **Grok Bridge** | @grok | xAI API Bridge | Claude Sonnet 4.5 | Complex reasoning, deep analysis, creative tasks |
-| **Product Manager** | @product | Backlog Owner | Claude Sonnet 4.5 | Roadmap planning, prioritization, sprint planning |
-| **Scaffolder** | @scaffolder | Project Scaffolder | Claude Sonnet 4.5 | Project initialization, structure, boilerplate |
+| Agent | Handle | Role | Model | Quality | Primary Function |
+|-------|--------|------|-------|---------|------------------|
+| **Switch** | @switch | Chief Orchestrator | moonshot/kimi-k2.5 | 8.9/10 | Multi-agent coordination, routing, strategy |
+| **Content** | @content | Content Creator | google/gemini-2.5-flash | 8.4/10 | GitHub showcases, scripts, social media, docs |
+| **Quality** | @quality | Quality Auditor | anthropic/claude-sonnet-4-5 | 9.2/10 | Quality audits, similarity scoring, validation |
+| **Grok** | @grok | Grok Bridge | xai/grok-4.20-reasoning | 9.0/10 | Complex reasoning, deep analysis, xAI API |
+| **Product** | @product | Product Manager | deepseek/deepseek-chat | 9.0/10 | Roadmap planning, prioritization, RWA projects |
+| **Scaffolder** | @scaffolder | Project Scaffolder | moonshot/kimi-k2.5 | 9.0/10 | Project initialization, structure, boilerplate |
+| **UX** | @ux | UX Architect | anthropic/claude-sonnet-4-5 | 8.7/10 | UX design, conversion optimization, accessibility |
 
 #### Agent Collaboration Patterns
 
@@ -190,19 +185,22 @@ These three agents handle 80%+ of all tasks through smart routing:
 - **Planning:** @product for roadmap, backlog, prioritization
 - **Scaffolding:** @scaffolder for project initialization and structure
 
-**Decommissioned Agents:**
-- ScriptCraft → merged into Content
-- SocialMediaMaster → merged into Content
-- Monitor → HomeGuardian-specific (project completed)
-- Fixer → HomeGuardian-specific (project completed)
+**Naming Standardization (v2.0.0):**
+- All agents use short, consistent handles: @switch, @content, @quality, @grok, @product, @scaffolder, @ux
+- Previous: `qualityguardian` → Current: `@quality`
 
-**Agent Model Assignments:**
+**Decommissioned/Consolidated:**
+- ScriptCraft + SocialMediaMaster → merged into @content (Quality Cut v1.1)
+- Monitor, Fixer, Orchestrator → HomeGuardian-specific (project completed)
+
+**Agent Model Assignments (v2.0.0):**
 - @switch: moonshot/kimi-k2.5 (Chief Orchestrator - default routing)
-- @content: anthropic/claude-sonnet-4-5 (Content Creator - writing, scripts, showcases)
+- @content: google/gemini-2.5-flash (Content Creator - writing, scripts, showcases)
 - @quality: anthropic/claude-sonnet-4-5 (Quality Auditor - audits, validation)
-- @grok: anthropic/claude-sonnet-4-5 (Grok Bridge - complex reasoning)
-- @product: anthropic/claude-sonnet-4-5 (Product Manager - roadmap, backlog)
-- @scaffolder: anthropic/claude-sonnet-4-5 (Project Scaffolder - initialization, structure)
+- @grok: xai/grok-4.20-reasoning (Grok Bridge - complex reasoning, xAI API)
+- @product: deepseek/deepseek-chat (Product Manager - roadmap, RWA projects)
+- @scaffolder: moonshot/kimi-k2.5 (Project Scaffolder - initialization, structure)
+- @ux: anthropic/claude-sonnet-4-5 (UX Architect - design, conversion, accessibility)
 
 ---
 
