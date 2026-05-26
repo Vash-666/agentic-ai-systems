@@ -5,6 +5,8 @@
  * Entry point for the meta-cognitive improvement system
  */
 
+import { metaAgent } from './api/meta-agent';
+
 export { metricsCollector, AgentMetrics } from './collectors/agent-metrics';
 export { patternDetector, Pattern } from './analyzers/pattern-detector';
 export { improvementEngine, ImprovementRecommendation } from './analyzers/improvement-engine';
