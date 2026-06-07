@@ -1,0 +1,92 @@
+{
+  "projects": [
+    {
+      "id": "ethereal-portraits",
+      "title": "Ethereal Portraits",
+      "category": "Portrait",
+      "description": "A series exploring the intersection of light and human emotion, capturing subjects in dreamlike environments.",
+      "image": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200&q=80",
+      "thumbnail": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=80",
+      "year": 2024,
+      "client": "Personal Project",
+      "featured": true
+    },
+    {
+      "id": "urban-symphony",
+      "title": "Urban Symphony",
+      "category": "Commercial",
+      "description": "Architectural photography series for a luxury real estate developer, showcasing modern urban living spaces.",
+      "image": "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80",
+      "thumbnail": "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80",
+      "year": 2024,
+      "client": "Metropolitan Developments",
+      "featured": true
+    },
+    {
+      "id": "wilderness-calling",
+      "title": "Wilderness Calling",
+      "category": "Landscape",
+      "description": "A year-long expedition documenting the raw beauty of the Pacific Northwest's untamed wilderness.",
+      "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
+      "thumbnail": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+      "year": 2023,
+      "client": "National Geographic",
+      "featured": true
+    },
+    {
+      "id": "fashion-forward",
+      "title": "Fashion Forward",
+      "category": "Editorial",
+      "description": "Editorial spread featuring emerging designers at New York Fashion Week, blending street style with haute couture.",
+      "image": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&q=80",
+      "thumbnail": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80",
+      "year": 2024,
+      "client": "Vogue Italia",
+      "featured": false
+    },
+    {
+      "id": "golden-hour",
+      "title": "Golden Hour",
+      "category": "Portrait",
+      "description": "Intimate portraits captured during the magical golden hour, exploring the relationship between natural light and skin tones.",
+      "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1200&q=80",
+      "thumbnail": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
+      "year": 2023,
+      "client": "Personal Project",
+      "featured": true
+    },
+    {
+      "id": "coastal-dreams",
+      "title": "Coastal Dreams",
+      "category": "Landscape",
+      "description": "Long exposure seascapes capturing the timeless dance between ocean and shore along California's rugged coastline.",
+      "image": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1200&q=80",
+      "thumbnail": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=600&q=80",
+      "year": 2023,
+      "client": "California Tourism Board",
+      "featured": false
+    },
+    {
+      "id": "brand-identity",
+      "title": "Brand Identity",
+      "category": "Commercial",
+      "description": "Product photography campaign for a sustainable skincare brand, emphasizing natural ingredients and eco-conscious packaging.",
+      "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&q=80",
+      "thumbnail": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=600&q=80",
+      "year": 2024,
+      "client": "Pure Botanics",
+      "featured": false
+    },
+    {
+      "id": "street-stories",
+      "title": "Street Stories",
+      "category": "Documentary",
+      "description": "Candid street photography documenting the diverse cultures and daily life in San Francisco's neighborhoods.",
+      "image": "https://images.unsplash.com/photo-1517732306149-e8f829eb588a?w=1200&q=80",
+      "thumbnail": "https://images.unsplash.com/photo-1517732306149-e8f829eb588a?w=600&q=80",
+      "year": 2023,
+      "client": "SF Chronicle",
+      "featured": false
+    }
+  ]
+}

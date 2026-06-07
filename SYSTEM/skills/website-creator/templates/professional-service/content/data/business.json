@@ -1,0 +1,36 @@
+{
+  "name": "Sterling & Associates",
+  "tagline": "Excellence in Legal Counsel Since 1998",
+  "description": "A premier law firm providing sophisticated legal solutions for businesses and individuals. Our team of experienced attorneys delivers strategic counsel with integrity and dedication.",
+  "founded": 1998,
+  "yearsInBusiness": 27,
+  "phone": "(212) 555-0147",
+  "email": "contact@sterlingassociates.com",
+  "address": {
+    "street": "450 Park Avenue, Suite 2100",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10022"
+  },
+  "hours": {
+    "Monday": "8:30 AM – 6:00 PM",
+    "Tuesday": "8:30 AM – 6:00 PM",
+    "Wednesday": "8:30 AM – 6:00 PM",
+    "Thursday": "8:30 AM – 6:00 PM",
+    "Friday": "8:30 AM – 5:00 PM",
+    "Saturday": "By Appointment",
+    "Sunday": "Closed"
+  },
+  "social": {
+    "linkedin": "https://linkedin.com/company/sterling-associates",
+    "twitter": "https://twitter.com/sterlinglegal",
+    "facebook": "https://facebook.com/sterlingassociateslaw"
+  },
+  "credentials": [
+    "Martindale-Hubbell AV Preeminent Rating",
+    "Best Lawyers in America",
+    "Super Lawyers",
+    "New York State Bar Association",
+    "American Bar Association"
+  ]
+}

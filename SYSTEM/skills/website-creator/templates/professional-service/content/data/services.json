@@ -1,0 +1,94 @@
+{
+  "services": [
+    {
+      "id": "corporate-law",
+      "title": "Corporate Law",
+      "shortDescription": "Strategic counsel for businesses of all sizes, from startups to Fortune 500 companies.",
+      "fullDescription": "Our corporate practice provides comprehensive legal services for businesses at every stage of growth. From entity formation and governance to complex mergers and acquisitions, we deliver strategic counsel that aligns with your business objectives.",
+      "features": [
+        "Entity formation and structuring",
+        "Mergers, acquisitions, and divestitures",
+        "Corporate governance and compliance",
+        "Contract drafting and negotiation",
+        "Securities and capital markets",
+        "Joint ventures and strategic alliances"
+      ],
+      "icon": "Building2"
+    },
+    {
+      "id": "litigation",
+      "title": "Commercial Litigation",
+      "shortDescription": "Skilled advocacy in complex disputes, protecting your interests in state and federal courts.",
+      "fullDescription": "When disputes arise, our litigation team provides aggressive, strategic representation. We have a proven track record of success in complex commercial litigation, from pre-trial negotiations through appellate advocacy.",
+      "features": [
+        "Complex commercial disputes",
+        "Breach of contract claims",
+        "Business torts and fraud",
+        "Class action defense",
+        "Alternative dispute resolution",
+        "Appellate practice"
+      ],
+      "icon": "Scale"
+    },
+    {
+      "id": "estate-planning",
+      "title": "Estate Planning",
+      "shortDescription": "Protecting your legacy with personalized estate planning and wealth preservation strategies.",
+      "fullDescription": "Our estate planning attorneys help individuals and families protect their assets and provide for future generations. We create comprehensive plans tailored to your unique circumstances and goals.",
+      "features": [
+        "Wills and trusts",
+        "Asset protection strategies",
+        "Business succession planning",
+        "Charitable giving planning",
+        "Powers of attorney",
+        "Healthcare directives"
+      ],
+      "icon": "Shield"
+    },
+    {
+      "id": "real-estate",
+      "title": "Real Estate",
+      "shortDescription": "Comprehensive real estate services for commercial transactions and development projects.",
+      "fullDescription": "We represent developers, investors, lenders, and property owners in all aspects of commercial real estate. Our team handles transactions ranging from single-asset acquisitions to complex portfolio deals.",
+      "features": [
+        "Commercial acquisitions and sales",
+        "Development and construction",
+        "Financing and refinancing",
+        "Leasing and landlord-tenant",
+        "Environmental compliance",
+        "Title and survey review"
+      ],
+      "icon": "Home"
+    },
+    {
+      "id": "employment",
+      "title": "Employment Law",
+      "shortDescription": "Guiding employers through the complexities of workplace regulations and disputes.",
+      "fullDescription": "Our employment law practice helps employers navigate the increasingly complex regulatory environment. We provide proactive counsel and vigorous defense when disputes arise.",
+      "features": [
+        "Employment agreements and policies",
+        "Discrimination and harassment defense",
+        "Wage and hour compliance",
+        "Executive compensation",
+        "Workplace investigations",
+        "Trade secrets and non-competes"
+      ],
+      "icon": "Users"
+    },
+    {
+      "id": "intellectual-property",
+      "title": "Intellectual Property",
+      "shortDescription": "Protecting your innovations, brands, and creative works in a competitive marketplace.",
+      "fullDescription": "Our IP attorneys help clients protect their most valuable intangible assets. From portfolio management to enforcement, we provide strategic counsel to maximize the value of your intellectual property.",
+      "features": [
+        "Patent prosecution and counseling",
+        "Trademark registration and enforcement",
+        "Copyright protection",
+        "Licensing and technology transfer",
+        "IP litigation",
+        "Trade secret protection"
+      ],
+      "icon": "Lightbulb"
+    }
+  ]
+}

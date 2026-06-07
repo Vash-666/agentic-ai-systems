@@ -1,0 +1,17 @@
+{
+  "projects": [
+    {
+      "id": "P001",
+      "clientId": "C001",
+      "name": "Website Project",
+      "type": "website",
+      "status": "complete",
+      "created": "2026-05-25",
+      "started": "2026-05-25"
+    }
+  ],
+  "counters": {
+    "project": 1
+  },
+  "lastUpdated": "2026-05-25"
+}

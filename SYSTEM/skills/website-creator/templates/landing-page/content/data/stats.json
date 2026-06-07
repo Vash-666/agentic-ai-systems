@@ -1,0 +1,20 @@
+{
+  "stats": [
+    {
+      "value": "10,000+",
+      "label": "Active Teams"
+    },
+    {
+      "value": "5M+",
+      "label": "Tasks Completed"
+    },
+    {
+      "value": "99.9%",
+      "label": "Uptime"
+    },
+    {
+      "value": "4.9/5",
+      "label": "User Rating"
+    }
+  ]
+}

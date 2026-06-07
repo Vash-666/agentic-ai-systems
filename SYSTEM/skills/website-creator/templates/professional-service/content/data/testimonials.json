@@ -1,0 +1,52 @@
+{
+  "testimonials": [
+    {
+      "id": 1,
+      "quote": "Sterling & Associates guided us through a complex acquisition with exceptional skill and attention to detail. Their strategic counsel was invaluable in achieving a favorable outcome.",
+      "author": "Michael Harrison",
+      "title": "CEO",
+      "company": "Harrison Technologies Inc.",
+      "service": "Corporate Law"
+    },
+    {
+      "id": 2,
+      "quote": "When we faced a critical commercial dispute, Elizabeth Chen and her team provided aggressive, strategic representation that resulted in a complete victory at trial.",
+      "author": "Robert Chen",
+      "title": "General Counsel",
+      "company": "Metro Development Group",
+      "service": "Commercial Litigation"
+    },
+    {
+      "id": 3,
+      "quote": "Marcus Thompson helped our family create a comprehensive estate plan that gives us peace of mind. His thoughtful approach and clear explanations made a complex process manageable.",
+      "author": "Patricia Anderson",
+      "title": "Private Client",
+      "company": "",
+      "service": "Estate Planning"
+    },
+    {
+      "id": 4,
+      "quote": "Sarah Mitchell's expertise in commercial real estate is unmatched. She navigated a complicated development deal with skill, keeping the transaction on track through numerous challenges.",
+      "author": "James Wilson",
+      "title": "President",
+      "company": "Wilson Properties LLC",
+      "service": "Real Estate"
+    },
+    {
+      "id": 5,
+      "quote": "David Patel has been our trusted employment counsel for over a decade. His proactive advice has helped us maintain a compliant workplace and avoid costly disputes.",
+      "author": "Lisa Martinez",
+      "title": "Chief Human Resources Officer",
+      "company": "Northeast Healthcare Systems",
+      "service": "Employment Law"
+    },
+    {
+      "id": 6,
+      "quote": "Jennifer Wu secured key patents that have become foundational assets for our technology company. Her technical expertise and strategic vision are truly exceptional.",
+      "author": "Dr. Andrew Foster",
+      "title": "Chief Technology Officer",
+      "company": "InnovateTech Solutions",
+      "service": "Intellectual Property"
+    }
+  ]
+}

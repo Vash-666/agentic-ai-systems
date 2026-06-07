@@ -1,0 +1,17 @@
+{
+  "clients": [
+    {
+      "id": "C001",
+      "name": "Sant Gupta (Mentor)",
+      "contact": "TBD",
+      "source": "Warm introduction",
+      "created": "2026-05-25",
+      "status": "active"
+    }
+  ],
+  "counters": {
+    "client": 1,
+    "project": 0
+  },
+  "lastUpdated": "2026-05-25"
+}

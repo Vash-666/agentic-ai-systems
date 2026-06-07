@@ -1,0 +1,22 @@
+{
+  "testimonials": [
+    {
+      "quote": "TaskFlow Pro transformed how our team works. We've cut project delivery time by 40% and everyone knows exactly what they need to do.",
+      "author": "Sarah Chen",
+      "role": "VP of Engineering",
+      "company": "TechCorp Inc."
+    },
+    {
+      "quote": "We tried Asana, Monday, and Trello. TaskFlow Pro is the only one that stuck. It's simple enough for everyone but powerful enough for complex projects.",
+      "author": "Michael Rodriguez",
+      "role": "Project Manager",
+      "company": "Digital Agency Co"
+    },
+    {
+      "quote": "The time tracking feature alone saved us $50K in the first quarter. We finally have visibility into where our team's time actually goes.",
+      "author": "Emily Watson",
+      "role": "Operations Director",
+      "company": "StartupXYZ"
+    }
+  ]
+}

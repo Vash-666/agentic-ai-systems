@@ -1,0 +1,102 @@
+{
+  "members": [
+    {
+      "id": "richard-sterling",
+      "name": "Richard Sterling",
+      "title": "Founding Partner",
+      "specialty": "Corporate Law & M&A",
+      "bio": "Richard Sterling founded the firm in 1998 with a vision of providing sophisticated legal counsel with a personal touch. With over 30 years of experience, he has advised on transactions totaling more than $10 billion in value.",
+      "education": [
+        "J.D., Harvard Law School",
+        "B.A., Yale University"
+      ],
+      "recognitions": [
+        "Best Lawyers in America",
+        "Chambers USA",
+        "Super Lawyers"
+      ],
+      "email": "rsterling@sterlingassociates.com"
+    },
+    {
+      "id": "elizabeth-chen",
+      "name": "Elizabeth Chen",
+      "title": "Managing Partner",
+      "specialty": "Commercial Litigation",
+      "bio": "Elizabeth Chen leads the firm's litigation practice and serves as Managing Partner. A formidable trial attorney, she has secured landmark victories in federal and state courts across the country.",
+      "education": [
+        "J.D., Columbia Law School",
+        "B.A., Stanford University"
+      ],
+      "recognitions": [
+        "Benchmark Litigation Star",
+        "Lawdragon 500",
+        "Super Lawyers"
+      ],
+      "email": "echen@sterlingassociates.com"
+    },
+    {
+      "id": "marcus-thompson",
+      "name": "Marcus Thompson",
+      "title": "Partner",
+      "specialty": "Estate Planning",
+      "bio": "Marcus Thompson advises high-net-worth individuals and families on complex estate planning and wealth preservation strategies. His thoughtful approach has made him a trusted advisor to generations of clients.",
+      "education": [
+        "J.D., NYU School of Law",
+        "B.S., University of Pennsylvania"
+      ],
+      "recognitions": [
+        "Best Lawyers in America",
+        "Super Lawyers"
+      ],
+      "email": "mthompson@sterlingassociates.com"
+    },
+    {
+      "id": "sarah-mitchell",
+      "name": "Sarah Mitchell",
+      "title": "Partner",
+      "specialty": "Real Estate",
+      "bio": "Sarah Mitchell represents developers, investors, and lenders in sophisticated commercial real estate transactions. Her deep market knowledge and attention to detail ensure seamless closings.",
+      "education": [
+        "J.D., Georgetown University Law Center",
+        "B.A., Duke University"
+      ],
+      "recognitions": [
+        "Chambers USA",
+        "Super Lawyers Rising Stars"
+      ],
+      "email": "smitchell@sterlingassociates.com"
+    },
+    {
+      "id": "david-patel",
+      "name": "David Patel",
+      "title": "Partner",
+      "specialty": "Employment Law",
+      "bio": "David Patel counsels employers on all aspects of the employment relationship. His practical approach helps clients navigate complex workplace issues while minimizing risk.",
+      "education": [
+        "J.D., Cornell Law School",
+        "B.A., University of Michigan"
+      ],
+      "recognitions": [
+        "Best Lawyers in America",
+        "Super Lawyers"
+      ],
+      "email": "dpatel@sterlingassociates.com"
+    },
+    {
+      "id": "jennifer-wu",
+      "name": "Jennifer Wu",
+      "title": "Partner",
+      "specialty": "Intellectual Property",
+      "bio": "Jennifer Wu helps technology companies and creative enterprises protect their innovations. Her technical background in computer science informs her strategic approach to IP matters.",
+      "education": [
+        "J.D., Berkeley Law",
+        "B.S., MIT"
+      ],
+      "recognitions": [
+        "IAM Patent 1000",
+        "Super Lawyers"
+      ],
+      "email": "jwu@sterlingassociates.com"
+    }
+  ]
+}

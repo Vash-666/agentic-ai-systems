@@ -1,0 +1,12 @@
+{
+  "/(pages)/about/page": "/about",
+  "/(pages)/contact/page": "/contact",
+  "/(pages)/expertise/page": "/expertise",
+  "/(pages)/faq/page": "/faq",
+  "/(pages)/page": "/",
+  "/(pages)/resources/page": "/resources",
+  "/(pages)/services/page": "/services",
+  "/(pages)/testimonials/page": "/testimonials",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found"
+}

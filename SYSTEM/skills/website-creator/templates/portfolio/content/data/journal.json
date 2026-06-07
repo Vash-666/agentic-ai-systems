@@ -1,0 +1,64 @@
+{
+  "posts": [
+    {
+      "id": "finding-light",
+      "title": "Finding Light in the Darkness",
+      "excerpt": "How I learned to embrace low-light photography and turn challenging conditions into artistic opportunities.",
+      "content": "Photography is fundamentally about light. Yet some of my most compelling images have come from situations where light was scarce...",
+      "category": "Technique",
+      "date": "2024-05-15",
+      "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80",
+      "featured": true
+    },
+    {
+      "id": "patience-landscape",
+      "title": "The Art of Patience in Landscape Photography",
+      "excerpt": "Why the best landscape photographers spend more time waiting than shooting.",
+      "content": "Landscape photography teaches you patience. You arrive hours before sunrise, set up your equipment, and then you wait...",
+      "category": "Landscape",
+      "date": "2024-04-28",
+      "image": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80",
+      "featured": true
+    },
+    {
+      "id": "portrait-connection",
+      "title": "Building Connection in Portrait Sessions",
+      "excerpt": "The technical skills matter, but the real magic happens when you connect with your subject.",
+      "content": "Anyone can learn to operate a camera. The shutter speed, aperture, and ISO are just mechanics. What separates good portrait photographers from great ones is the ability to connect...",
+      "category": "Portrait",
+      "date": "2024-04-10",
+      "image": "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=800&q=80",
+      "featured": false
+    },
+    {
+      "id": "iceland-expedition",
+      "title": "Iceland: A Photographer's Paradise",
+      "excerpt": "Notes from a month-long expedition capturing the dramatic landscapes of Iceland.",
+      "content": "Iceland has long been on my bucket list. The land of fire and ice did not disappoint...",
+      "category": "Travel",
+      "date": "2024-03-22",
+      "image": "https://images.unsplash.com/photo-1476610182048-b716b8518aae?w=800&q=80",
+      "featured": true
+    },
+    {
+      "id": "gear-minimalism",
+      "title": "The Case for Gear Minimalism",
+      "excerpt": "Why I sold most of my equipment and became a better photographer because of it.",
+      "content": "It started with a simple question: am I a photographer or a gear collector? The answer wasn't what I wanted to hear...",
+      "category": "Gear",
+      "date": "2024-03-05",
+      "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80",
+      "featured": false
+    },
+    {
+      "id": "color-theory",
+      "title": "Color Theory for Photographers",
+      "excerpt": "Understanding how colors interact can transform your images from good to extraordinary.",
+      "content": "Color theory isn't just for painters. As photographers, we work with color in every frame...",
+      "category": "Technique",
+      "date": "2024-02-18",
+      "image": "https://images.unsplash.com/photo-1502691876148-a84978e59af8?w=800&q=80",
+      "featured": false
+    }
+  ]
+}
