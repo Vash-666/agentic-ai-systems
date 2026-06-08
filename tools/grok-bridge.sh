@@ -1,9 +1,10 @@
 #!/bin/bash
 #
-# Grok Bridge Script v2.2
-# Secure wrapper for xAI Grok API with cost tracking and credit management
+# Grok Bridge Script v2.3 (with Distributed Tracing)
+# Secure wrapper for xAI Grok API with cost tracking, credit management, and trace logging
 # Usage: bash grok-bridge.sh "Your question"
 #        bash grok-bridge.sh --model grok-4.20-code "Your question"
+#        bash grok-bridge.sh --trace-id <trace_id> "Your question" (continue existing trace)
 #
 
 set -e
@@ -17,6 +18,12 @@ HEALTH_LOG="$WORKSPACE/health-warnings.jsonl"
 API_URL="https://api.x.ai/v1/chat/completions"
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S %Z")
 START_TIME=$(date +%s.%N)
+
+# Source trace library if available
+TRACE_LIB="$WORKSPACE/tools/trace-lib.sh"
+if [ -f "$TRACE_LIB" ]; then
+    source "$TRACE_LIB"
+fi
 
 # Default model
 MODEL="grok-4.20-reasoning"
@@ -32,6 +39,7 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
+CYAN='\033[0;36m'
 NC='\033[0m'
 
 # ============================================================================
@@ -64,6 +72,8 @@ function log_grok_call() {
     local tokens_output="$7"
     local tokens_total="$8"
     local estimated_cost="$9"
+    local trace_id="${10:-}"
+    local span_id="${11:-}"
 
     mkdir -p "$(dirname "$LOG_FILE")"
 
@@ -77,6 +87,8 @@ function log_grok_call() {
 **Time:** ${response_time}s  
 **Tokens:** ${tokens_total:-unknown} (in:${tokens_input:-?}, out:${tokens_output:-?})  
 **Cost:** \$${estimated_cost:-unknown}
+**Trace ID:** ${trace_id:-none}
+**Span ID:** ${span_id:-none}
 
 **Question:**  
 $user_message
@@ -91,7 +103,7 @@ EOF
     # Log to cost tracker (JSONL format)
     if [ -n "$tokens_total" ]; then
         cat >> "$COST_LOG" <<EOF
-{"timestamp":"$timestamp","model":"$model","tokens_input":${tokens_input:-0},"tokens_output":${tokens_output:-0},"tokens_total":${tokens_total:-0},"estimated_cost":${estimated_cost:-0},"response_time":${response_time},"message_length":${#user_message}}
+{"timestamp":"$timestamp","model":"$model","tokens_input":${tokens_input:-0},"tokens_output":${tokens_output:-0},"tokens_total":${tokens_total:-0},"estimated_cost":${estimated_cost:-0},"response_time":${response_time},"message_length":${#user_message},"trace_id":"${trace_id:-}","span_id":"${span_id:-}"}
 EOF
     fi
 }
@@ -163,6 +175,8 @@ fi
 
 # Parse arguments
 USER_MESSAGE=""
+TRACE_ID=""
+PARENT_SPAN_ID=""
 while [[ $# -gt 0 ]]; do
     case $1 in
         --model)
@@ -171,6 +185,14 @@ while [[ $# -gt 0 ]]; do
             ;;
         --system)
             SYSTEM_PROMPT="$2"
+            shift 2
+            ;;
+        --trace-id)
+            TRACE_ID="$2"
+            shift 2
+            ;;
+        --parent-span-id)
+            PARENT_SPAN_ID="$2"
             shift 2
             ;;
         *)
@@ -194,6 +216,22 @@ if [ -z "$USER_MESSAGE" ]; then
     exit 1
 fi
 
+# Initialize trace if trace library is available
+SPAN_ID=""
+if [ -f "$TRACE_LIB" ]; then
+    if [ -z "$TRACE_ID" ]; then
+        # Create new trace
+        TRACE_ID=$(trace_init "grok-bridge-request")
+        SPAN_ID=$(trace_start_span "grok-api-call" "grok-bridge" '{"model": "'$MODEL'"}')
+    else
+        # Continue existing trace
+        export TRACE_ID="$TRACE_ID"
+        export TRACE_SPAN_ID="$PARENT_SPAN_ID"
+        export TRACE_FILE=$(trace_get_file "$TRACE_ID")
+        SPAN_ID=$(trace_start_span "grok-api-call" "grok-bridge" '{"model": "'$MODEL'", "continued": true}')
+    fi
+fi
+
 # Load API key
 if [ ! -f "$ENV_FILE" ]; then
     echo -e "${RED}❌ Error: .env file not found at $ENV_FILE${NC}"
@@ -214,7 +252,15 @@ if [[ ! "$GROK_API_KEY" =~ ^xai- ]]; then
 fi
 
 echo -e "${BLUE}🤖 Calling Grok API (model: $MODEL)...${NC}"
+if [ -n "$TRACE_ID" ]; then
+    echo -e "${CYAN}📊 Trace ID: $TRACE_ID${NC}"
+fi
 echo ""
+
+# Add API call event to trace
+if [ -n "$SPAN_ID" ]; then
+    trace_add_event "$SPAN_ID" "api_request_start" '{"url": "'$API_URL'"}'
+fi
 
 SANITIZED_SYSTEM_PROMPT=$(sanitize_json "$SYSTEM_PROMPT")
 SANITIZED_USER_MESSAGE=$(sanitize_json "$USER_MESSAGE")
@@ -244,6 +290,8 @@ EOF
 RESPONSE=$(curl -s -X POST "$API_URL" \
   -H "Authorization: Bearer $GROK_API_KEY" \
   -H "Content-Type: application/json" \
+  -H "X-Trace-ID: ${TRACE_ID:-}" \
+  -H "X-Span-ID: ${SPAN_ID:-}" \
   -d "$JSON_PAYLOAD" \
   --max-time 30 \
   --retry 2 \
@@ -256,6 +304,10 @@ RESPONSE_TIME=$(echo "$END_TIME - $START_TIME" | bc | awk '{printf "%.2f", $1}')
 if [ $? -ne 0 ]; then
     echo -e "${RED}❌ Error: Failed to connect to xAI API${NC}"
     echo "Check network connectivity and API key validity."
+    if [ -n "$SPAN_ID" ]; then
+        trace_add_event "$SPAN_ID" "api_error" '{"error": "connection_failed"}'
+        trace_end_span "$SPAN_ID" "error"
+    fi
     exit 1
 fi
 
@@ -266,6 +318,12 @@ if echo "$RESPONSE" | grep -q '"error"'; then
 
     echo -e "${RED}❌ API Error: $ERROR_MSG${NC}"
     echo -e "${YELLOW}Code: $ERROR_CODE${NC}"
+
+    # Add error event to trace
+    if [ -n "$SPAN_ID" ]; then
+        trace_add_event "$SPAN_ID" "api_error" '{"error": "'$ERROR_CODE'", "message": "'$ERROR_MSG'"}'
+        trace_end_span "$SPAN_ID" "error"
+    fi
 
     # Special handling for common errors
     if [[ "$ERROR_CODE" == "Some resource has been exhausted" ]] || [[ "$ERROR_MSG" == *"credit"* ]] || [[ "$ERROR_MSG" == *"exhausted"* ]]; then
@@ -292,6 +350,11 @@ if echo "$RESPONSE" | grep -q '"error"'; then
     exit 1
 fi
 
+# Add response received event to trace
+if [ -n "$SPAN_ID" ]; then
+    trace_add_event "$SPAN_ID" "api_response_received" '{"response_time": '$RESPONSE_TIME'}'
+fi
+
 # Extract response content
 GROK_RESPONSE=$(echo "$RESPONSE" | grep -o '"content":"[^"]*"' | cut -d'"' -f4 | sed 's/\\n/\n/g')
 
@@ -299,6 +362,10 @@ if [ -z "$GROK_RESPONSE" ]; then
     echo -e "${YELLOW}⚠ Warning: Empty response from Grok API${NC}"
     echo "Raw response:"
     echo "$RESPONSE" | head -100
+    if [ -n "$SPAN_ID" ]; then
+        trace_add_event "$SPAN_ID" "api_error" '{"error": "empty_response"}'
+        trace_end_span "$SPAN_ID" "error"
+    fi
     exit 1
 fi
 
@@ -313,6 +380,17 @@ if [ -n "$TOKENS_INPUT" ] && [ -n "$TOKENS_OUTPUT" ]; then
     COST_INPUT=$(echo "scale=6; $TOKENS_INPUT * $COST_PER_MILLION_INPUT / 1000000" | bc)
     COST_OUTPUT=$(echo "scale=6; $TOKENS_OUTPUT * $COST_PER_MILLION_OUTPUT / 1000000" | bc)
     ESTIMATED_COST=$(echo "scale=6; $COST_INPUT + $COST_OUTPUT" | bc)
+fi
+
+# Add token usage to trace
+if [ -n "$SPAN_ID" ]; then
+    trace_add_attribute "$SPAN_ID" "tokens_input" "${TOKENS_INPUT:-0}"
+    trace_add_attribute "$SPAN_ID" "tokens_output" "${TOKENS_OUTPUT:-0}"
+    trace_add_attribute "$SPAN_ID" "tokens_total" "${TOKENS_TOTAL:-0}"
+    trace_add_attribute "$SPAN_ID" "estimated_cost" "${ESTIMATED_COST:-0}"
+    trace_add_attribute "$SPAN_ID" "response_time" "$RESPONSE_TIME"
+    trace_add_event "$SPAN_ID" "api_call_complete" '{"status": "success"}'
+    trace_end_span "$SPAN_ID" "ok"
 fi
 
 # Format output
@@ -332,9 +410,15 @@ echo "$GROK_RESPONSE"
 echo ""
 echo "---"
 echo "*Model: $MODEL | Time: $TIMESTAMP*"
+if [ -n "$TRACE_ID" ]; then
+    echo "*Trace ID: $TRACE_ID*"
+fi
 
 # Log the call
-log_grok_call "$USER_MESSAGE" "$GROK_RESPONSE" "$MODEL" "$TIMESTAMP" "$RESPONSE_TIME" "$TOKENS_INPUT" "$TOKENS_OUTPUT" "$TOKENS_TOTAL" "$ESTIMATED_COST"
+log_grok_call "$USER_MESSAGE" "$GROK_RESPONSE" "$MODEL" "$TIMESTAMP" "$RESPONSE_TIME" "$TOKENS_INPUT" "$TOKENS_OUTPUT" "$TOKENS_TOTAL" "$ESTIMATED_COST" "$TRACE_ID" "$SPAN_ID"
 
 echo ""
 echo -e "${GREEN}✅ Logged to: $LOG_FILE${NC}"
+if [ -n "$TRACE_ID" ]; then
+    echo -e "${CYAN}📊 Trace: trace-viewer.sh $TRACE_ID${NC}"
+fi

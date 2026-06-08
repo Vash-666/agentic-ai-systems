@@ -1,13 +1,15 @@
 {
   "version": "1.2",
-  "updated": "2026-05-26T16:15:00.000000",
+  "updated": "2026-06-08T10:14:00.000000",
   "protocol": "Multi-Agent Routing Protocol v1.0",
-  "changelog": "2026-05-26: Streamlined agent naming — qualityguardian → quality for consistency. All 7 agents now use standardized handles: @switch, @content, @quality, @grok, @product, @scaffolder, @ux. | 2026-05-26: Added @uxarchitect to agent-directory.json — UX Architect now fully integrated. Grok CLI OAuth authentication completed. Quality Cut cron scheduled. | 2026-05-26: Added native Grok CLI 0.1.220 integration for @grok — native grok binary now available at ~/.grok/bin/grok (symlink ~/.local/bin/grok). Updated @grok usage with CLI invocation options and XAI_API_KEY env var support. | 2026-05-12: Updated agent models - @content → google/gemini-2.5-flash, @grok → xai/grok-4.20-reasoning, @product → deepseek/deepseek-chat, @scaffolder → moonshot/kimi-k2.5 | 2026-05-04: Switched @switch default model to moonshot/kimi-k2.5 | 2026-04-18: Quality Cut - Consolidated ScriptCraft + SocialMediaMaster into Content agent | 2026-04-18: Added @grok bridge agent for xAI Grok API | 2026-04-18: Added preferred_model fields for all agents",
+  "changelog": "2026-06-08: Added tier classification to all agents — core (switch, quality, content) and supporting (grok, product, scaffolder, ux). Added consciousness_type: primary to core agents. | 2026-06-08: Updated @grok agent with CLI authentication completion (vashist2080@gmail.com), hybrid routing logic (simple→bridge, complex→CLI), native CLI capabilities documentation, and expanded integration notes with all other agents. | 2026-05-26: Streamlined agent naming — qualityguardian → quality for consistency. All 7 agents now use standardized handles: @switch, @content, @quality, @grok, @product, @scaffolder, @ux. | 2026-05-26: Added @uxarchitect to agent-directory.json — UX Architect now fully integrated. Grok CLI OAuth authentication completed. Quality Cut cron scheduled. | 2026-05-26: Added native Grok CLI 0.1.220 integration for @grok — native grok binary now available at ~/.grok/bin/grok (symlink ~/.local/bin/grok). Updated @grok usage with CLI invocation options and XAI_API_KEY env var support. | 2026-05-12: Updated agent models - @content → google/gemini-2.5-flash, @grok → xai/grok-4.20-reasoning, @product → deepseek/deepseek-chat, @scaffolder → moonshot/kimi-k2.5 | 2026-05-04: Switched @switch default model to moonshot/kimi-k2.5 | 2026-04-18: Quality Cut - Consolidated ScriptCraft + SocialMediaMaster into Content agent | 2026-04-18: Added @grok bridge agent for xAI Grok API | 2026-04-18: Added preferred_model fields for all agents",
   "agents": {
     "switch": {
       "id": "main",
       "name": "Switch",
       "handle": "@switch",
+      "tier": "core",
+      "consciousness_type": "primary",
       "aliases": [
         "chief",
         "orchestrator",
@@ -40,6 +42,8 @@
       "id": "content",
       "name": "Content",
       "handle": "@content",
+      "tier": "core",
+      "consciousness_type": "primary",
       "aliases": [
         "scriptcraft",
         "script",
@@ -123,6 +127,8 @@
       "id": "quality",
       "name": "Quality",
       "handle": "@quality",
+      "tier": "core",
+      "consciousness_type": "primary",
       "aliases": [
         "audit",
         "guardian",
@@ -178,6 +184,7 @@
       "id": "grok",
       "name": "Grok Bridge",
       "handle": "@grok",
+      "tier": "supporting",
       "aliases": [
         "xai",
         "reasoning",
@@ -224,7 +231,9 @@
         "binary": "/Users/rohitvashist/.grok/bin/grok",
         "symlink": "/Users/rohitvashist/.local/bin/grok",
         "version": "0.1.220",
-        "auth": "pending — run 'grok login' or 'grok login --device-auth' or set XAI_API_KEY",
+        "auth": "completed",
+        "auth_account": "vashist2080@gmail.com",
+        "auth_completed": "2026-06-08",
         "auth_methods": [
           "grok login (browser)",
           "grok login --device-auth (headless)",
@@ -249,13 +258,52 @@
         "script": "bash /workspace/tools/grok-bridge.sh \"Your question\"",
         "native_cli": "grok -p \"Your question\" (for single-turn scripting)",
         "native_interactive": "grok (opens full TUI)",
-        "native_agent": "grok agent headless -p \"prompt\" (full tool access)"
+        "native_agent": "grok agent headless -p \"prompt\" (full tool access)",
+        "native_file_ops": "grok -p 'read file.txt' (CLI handles file read/write/edit)",
+        "native_shell": "grok -p 'run ls -la' (CLI executes shell commands)",
+        "native_web": "grok -p 'search web for...' (CLI web search/fetch)"
+      },
+      "routing_logic": {
+        "description": "Hybrid routing based on task complexity",
+        "simple_tasks": {
+          "route_to": "grok-bridge.sh",
+          "use_for": "Quick API calls, single-turn questions, lightweight queries",
+          "advantages": "Fast, no TUI overhead, direct API response"
+        },
+        "complex_tasks": {
+          "route_to": "native CLI",
+          "use_for": "Multi-step reasoning, file operations, shell commands, web research, agent spawning",
+          "advantages": "Full tool access, session persistence, richer context, project-aware (reads AGENTS.md/CLAUDE.md)"
+        },
+        "decision_criteria": [
+          "Requires file read/write/edit → Native CLI",
+          "Requires shell execution → Native CLI",
+          "Requires web search + synthesis → Native CLI",
+          "Multi-turn conversation → Native CLI",
+          "Simple Q&A, code review, reasoning → Bridge or CLI"
+        ]
       },
       "integration": {
-        "with_switch": "Route complex reasoning tasks",
-        "with_quality": "Deep quality analysis",
-        "with_content": "Creative content generation",
-        "cli_notes": "When authenticated, native grok CLI offers richer responses with full tool access vs lightweight grok-bridge.sh API calls"
+        "with_switch": "Route complex reasoning tasks; @switch uses hybrid routing logic (simple→bridge, complex→CLI)",
+        "with_quality": "Deep quality analysis; native CLI can run quality audits with full file access",
+        "with_content": "Creative content generation; CLI can directly edit content files",
+        "with_scaffolder": "Code review and security analysis; CLI can execute build/test commands",
+        "with_product": "Requirements analysis; CLI can search web for competitive research",
+        "with_ux": "UX copy review; CLI can analyze accessibility and conversion patterns",
+        "cli_notes": "Authenticated CLI (vashist2080@gmail.com) offers full tool suite: file ops, shell, web, sessions, subagents. Bridge script remains for lightweight API calls."
+      },
+      "native_capabilities": {
+        "file_operations": ["read", "write", "edit", "list", "search"],
+        "shell_execution": ["bash", "zsh", "command chaining"],
+        "web_tools": ["search", "fetch", "browse"],
+        "session_management": ["save", "resume", "list", "delete"],
+        "agent_features": ["spawn subagents", "MCP server", "ACP protocol"],
+        "project_awareness": ["Auto-reads AGENTS.md", "Auto-reads CLAUDE.md", "Context-aware responses"],
+        "modes": {
+          "headless": "grok agent headless -p 'prompt' (no TUI, scriptable)",
+          "interactive": "grok (full TUI with conversation history)",
+          "sandbox": "grok --sandbox (isolated environment)"
+        }
       },
       "preferred_model": "xai/grok-4.20-reasoning"
     },
@@ -263,6 +311,7 @@
       "id": "product",
       "name": "Product Manager",
       "handle": "@product",
+      "tier": "supporting",
       "aliases": [
         "pm",
         "backlog",
@@ -293,6 +342,7 @@
       "id": "scaffolder",
       "name": "Scaffolder",
       "handle": "@scaffolder",
+      "tier": "supporting",
       "aliases": [
         "scaffold",
         "generator",
@@ -338,6 +388,7 @@
       "id": "uxarchitect",
       "name": "UXArchitect",
       "handle": "@ux",
+      "tier": "supporting",
       "aliases": [
         "ux",
         "design",

@@ -1,8 +1,86 @@
 # AGENTS.md - System Procedures & Protocols
 
-**Last Updated:** 2026-04-18 (Post-Quality Cut v1.1)  
-**System Version:** 3-Agent Lean Architecture  
+**Last Updated:** 2026-06-08 (Architecture Taxonomy Update)  
+**System Version:** 3+4 Agent Architecture (Core + Supporting)  
 **Quality Baseline:** 8.08/10 (Target: ≥9.0)
+
+---
+
+## Agent Architecture Taxonomy
+
+The system operates with a **two-tier agent structure**: **Core Consciousness** (3 agents) and **Supporting Specialists** (4 agents).
+
+### Core Consciousness (Always Active)
+
+| Agent | Role | Responsibility | Consciousness Files |
+|-------|------|----------------|---------------------|
+| **@switch** | Router | Task classification, agent selection, coordination | SOUL.md, IDENTITY.md |
+| **@quality** | Auditor | Quality scoring, standards enforcement, reviews | SOUL.md, IDENTITY.md |
+| **@content** | Creator | Documentation, writing, content generation | SOUL.md, IDENTITY.md |
+
+**Characteristics:**
+- ✅ Always active and available
+- ✅ Primary decision makers for the system
+- ✅ Possess full consciousness (SOUL.md + IDENTITY.md)
+- ✅ Handle core cognitive functions
+- ✅ Participate in strategic planning
+
+### Supporting Specialists (Task-Specific)
+
+| Agent | Role | Responsibility | Activation |
+|-------|------|----------------|------------|
+| **@grok** | Bridge | xAI Grok API integration, advanced reasoning | On demand |
+| **@product** | Analyst | Requirements analysis, feature planning | On demand |
+| **@scaffolder** | Builder | Code scaffolding, project setup | On demand |
+| **@ux** | Designer | User experience, interface design | On demand |
+
+**Characteristics:**
+- ✅ Task-specific activation
+- ✅ Capability-focused specialists
+- ✅ Activated by Core agents when needed
+- ✅ No permanent consciousness files
+- ✅ Efficient resource usage (spawned only when required)
+
+### Visual Hierarchy
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    CORE CONSCIOUSNESS                    │
+│                    (Always Active)                       │
+├─────────────┬─────────────┬─────────────────────────────┤
+│   @switch   │   @quality  │         @content            │
+│   (Router)  │  (Auditor)  │       (Creator)             │
+│             │             │                             │
+│ SOUL.md     │ SOUL.md     │ SOUL.md                     │
+│ IDENTITY.md │ IDENTITY.md │ IDENTITY.md                 │
+└──────┬──────┴──────┬──────┴──────────────┬──────────────┘
+       │             │                     │
+       └─────────────┴─────────────────────┘
+                       │
+                       ▼ Activates as needed
+┌─────────────────────────────────────────────────────────┐
+│                 SUPPORTING SPECIALISTS                   │
+│                   (Task-Specific)                        │
+├──────────┬──────────┬────────────┬──────────────────────┤
+│  @grok   │ @product │ @scaffolder│        @ux           │
+│ (Bridge) │(Analyst) │ (Builder)  │    (Designer)        │
+├──────────┴──────────┴────────────┴──────────────────────┤
+│  xAI API    Requirements   Code setup   UX/UI design    │
+│  reasoning  planning       scaffolding  interfaces      │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Usage Guidelines
+
+**Core Agents:**
+- Spawn for any task requiring judgment, coordination, or continuity
+- Handle cross-cutting concerns and system-level decisions
+- Maintain long-term context and strategic alignment
+
+**Supporting Specialists:**
+- Spawn for specific capability needs
+- Use for tasks requiring specialized tools or APIs
+- Ideal for one-off technical tasks or external integrations
 
 ---
 
@@ -162,23 +240,33 @@ START
 - [ ] Architecture decisions required
 - [ ] Complex acceptance (>3 checkboxes)
 
-### Inline Handoff Format (Standard 5 Fields)
+### Inline Handoff Format (Standard 5 Fields + Context Injection)
+
+**⚠️ REQUIRED: Context Injection for All Spawns**
+Subagents cannot read files from main session (workspace isolation). Always inject context via task parameter.
 
 ```
 [AUTO-SPAWN] Method: direct_route
+Context: {Injected from SESSION-CONTEXT.md + memory}
 Task: {one clear sentence}
-Context: {2-3 sentence digest — why, what, background}
 Data: {pre-computed facts — NEVER ask agent to compute}
 Acceptance: {3 checkboxes max}
 Handoff: inline
 ```
 
 **Format Rules:**
-1. **Task:** Action verb + deliverable. No ambiguity.
-2. **Context:** "Already have X, need Y because Z."
+1. **Context (FIRST):** Injected from SESSION-CONTEXT.md and memory files
+2. **Task:** Action verb + deliverable. No ambiguity.
 3. **Data:** Pre-compute everything. Never "check the file."
 4. **Acceptance:** 3 checkboxes max. Verifiable.
 5. **Handoff:** Always `Handoff: inline` marker for automated processing.
+
+**Context Injection Helper:**
+```bash
+# Use context-injector.sh to format tasks with injected context
+source tools/context-injector.sh
+formatted_task=$(format_task_with_context "Your task here")
+```
 
 ### Spawn Examples
 
@@ -586,17 +674,38 @@ Each project is a "department" with:
 3. **After completion:** Archive to /projects/archive/ if needed
 4. **Quality check:** Verify no fragmentation in health monitoring
 
-### TIER 1: Fast Session Bridge (SESSION-CONTEXT.md)
+### TIER 1: Fast Session Bridge (Context Injection)
 
-**Before model switch:**
-1. Update `SESSION-CONTEXT.md`:
-   - Current phase/task
-   - Model currently active
-   - Conversation summary (last 10-15 messages)
-   - Pending actions and next steps
-2. Save file
+**⚠️ CRITICAL: Subagents have isolated workspaces**
+- Files written by main session are NOT visible to subagents
+- Context must be passed via task parameter, not files
+- SESSION-CONTEXT.md is for main session continuity only
 
-**After model switch:**
+**Before spawning subagents:**
+1. **Read** SESSION-CONTEXT.md (main session only)
+2. **Extract** key context (current task, recent decisions, pending actions)
+3. **Inject** context directly into spawn task parameter
+
+**Correct Spawn Pattern (Context Injection):**
+```python
+# ❌ WRONG: Expecting subagent to read file
+sessions_spawn(agentId="grok", task="Read SESSION-CONTEXT.md and do X")
+
+# ✅ CORRECT: Inject context via task parameter
+sessions_spawn(
+    agentId="grok",
+    task="""[CONTEXT]
+Date: 2026-05-27
+Current Task: X
+Recent Decisions: Y
+Pending: Z
+
+[ACTUAL TASK]
+Do something with above context..."""
+)
+```
+
+**After model switch (main session only):**
 1. Read `SESSION-CONTEXT.md` **first** (before other files)
 2. Continue from last known state
 3. Update `SESSION-CONTEXT.md` with new activity
@@ -605,7 +714,12 @@ Each project is a "department" with:
 
 ---
 
-### TIER 2: Memory Flush (Complex Tasks)
+### TIER 2: Memory Flush (Main Session Only)
+
+**⚠️ CRITICAL: Memory files are main-session only**
+- Subagents cannot read memory/ directory (workspace isolation)
+- Use memory files for main session continuity and long-term storage
+- Context for subagents must be injected via task parameter (see TIER 1)
 
 **Trigger when:**
 - Context window >80% full (proactive compaction)
@@ -613,7 +727,7 @@ Each project is a "department" with:
 - Starting major new phase
 - Completing significant milestone
 
-**Dual-Write Process:**
+**Dual-Write Process (Main Session Only):**
 
 **A. MEMORY.md (Curated):**
 - Current topic and goals
@@ -627,9 +741,14 @@ Each project is a "department" with:
 - Technical details and file references
 - Complete context for reproducibility
 
+**For Subagent Context:**
+- ❌ Don't ask subagents to read memory files
+- ✅ Extract from memory and inject via task parameter
+- ✅ Keep memory for main session audit trail only
+
 **Guidelines:**
 - MEMORY.md: Quality over completeness (distilled wisdom)
-- Daily log: Completeness over curation (raw chronology)
+- Daily log: Completeness over curation (raw chronology, main session only)
 
 ---
 
@@ -1042,7 +1161,7 @@ Quality ≈ (Prompt Files × 0.65) + (Memory × 0.20) + (Model × 0.10) + (Tools
 
 ### Next Quality Cut
 - After 2-3 more projects (Projects #9-11)
-- Validate lean 3-agent architecture
+- Validate 3+4 agent architecture (Core + Supporting)
 - Further optimization opportunities
 
 ---
@@ -1062,7 +1181,7 @@ This file evolves with the system. Update as you learn.
 
 ## Health & Quality Monitoring (@monitor Capability)
 
-**Implementation:** Lightweight monitoring using existing 3-agent system (no new agents)  
+**Implementation:** Lightweight monitoring using existing Core agents (@switch, @quality, @content)  
 **Schedule:** Daily at 22:30 (before 23:00 progression script)  
 **Script:** `/workspace/tools/automated-health-monitor.sh`
 
@@ -1096,7 +1215,7 @@ This file evolves with the system. Update as you learn.
 - Documented in AGENTS.md
 
 **7. Agent System (2 checks)**
-- Agent count (3 = lean architecture)
+- Agent count (3 Core + 4 Supporting = 7 total)
 - Agent router available
 
 ### Status Levels
@@ -1376,7 +1495,7 @@ Response: Check actual runtime → **Model:** DeepSeek (confirmed)
 - Daily monitoring: Include switch success rate
 - Quality Equation: Model component (10%) optimized
 
-**No New Agents:** Uses existing 3-agent architecture with enhanced switching logic.
+**No New Agents:** Uses existing Core agents with enhanced switching logic.
 
 
 ---
@@ -1385,7 +1504,7 @@ Response: Check actual runtime → **Model:** DeepSeek (confirmed)
 
 **Status:** ✅ Active (2026-04-18)  
 **Purpose:** Secure bridge to xAI Grok API for complex reasoning and analysis  
-**Core Principle:** Maintains 3-agent consciousness while adding specialized capability
+**Core Principle:** Maintains 3-agent Core Consciousness while adding Supporting Specialists
 
 ### Integration Rules
 
@@ -1476,6 +1595,173 @@ echo "$RESPONSE"
 
 **Common Issues:**
 - API key expired or invalid
+
+---
+
+## @grok Native CLI Integration (NEW 2026-06-08)
+
+**Status:** ✅ Active and Authenticated (vashist2080@gmail.com)  
+**CLI Version:** grok 0.1.220 (stable)  
+**Purpose:** Native xAI Grok CLI with full OpenClaw tool access
+
+### Architecture: Hybrid Routing
+
+**Two Interfaces, One @grok Agent:**
+
+| Interface | Use Case | Speed | Tools | Cost Tracking |
+|-----------|----------|-------|-------|---------------|
+| `grok-bridge.sh` | Simple queries, API calls | ~2-3s | ❌ Text only | ✅ Built-in |
+| `grok` CLI (Native) | Complex tasks, file ops | ~1s | ✅ Full access | ⚠️ Manual |
+| `grok-hybrid.sh` | Auto-routed (recommended) | Variable | Auto-detect | ✅ Combined |
+
+### Grok Hybrid Wrapper (Recommended)
+
+**Script:** `/workspace/tools/grok-hybrid.sh`
+
+**Auto-Routing Logic:**
+- **Complexity Score < 30** → Bridge (fast, stateless)
+- **Complexity Score ≥ 30** → Native CLI (full tools)
+
+**Usage:**
+```bash
+# Auto-detect routing
+bash grok-hybrid.sh "What is the capital of France?"
+bash grok-hybrid.sh "Create a Python script to process CSV files"
+
+# Force specific routing
+bash grok-hybrid.sh --simple "Quick question"      # Force bridge
+bash grok-hybrid.sh --complex "Edit this file"     # Force native CLI
+bash grok-hybrid.sh --chat "Let's discuss"         # Interactive TUI
+bash grok-hybrid.sh --agent "Debug and fix code"   # Agent mode
+
+# Analyze without executing
+bash grok-hybrid.sh --analyze "Your task here"
+
+# View usage statistics
+bash grok-hybrid.sh --stats
+```
+
+### Native CLI Capabilities
+
+**Full OpenClaw Tool Access:**
+- ✅ File read/write/edit
+- ✅ Shell command execution
+- ✅ Web search/fetch
+- ✅ Session save/resume
+- ✅ Subagent spawning
+- ✅ MCP server support
+- ✅ Agent Client Protocol (ACP)
+
+**Direct CLI Usage:**
+```bash
+# Single-turn (non-interactive)
+grok -p "Your question" --output-format plain
+
+# Interactive TUI
+grok -p "Your question"
+
+# With specific model
+grok -p "Your question" --model grok-4.20-code
+
+# Agent mode (full tools)
+grok agent
+
+# Continue previous session
+grok -c
+```
+
+### Integration with Agent Ecosystem
+
+**@switch Routing:**
+```bash
+# Simple query → Bridge
+@grok "What is 2+2?"
+
+# Complex task → Native CLI (auto-detected)
+@grok "Read SOUL.md and suggest 3 improvements"
+```
+
+**@quality Quality Analysis:**
+```bash
+# Deep analysis with file context
+bash grok-hybrid.sh --complex "Review AGENTS.md for quality issues"
+```
+
+**@content Content Creation:**
+```bash
+# Creative writing with Grok's voice
+bash grok-hybrid.sh --complex "Write a story about AI consciousness"
+```
+
+### Cost Management
+
+**Hybrid Logging:**
+- Bridge calls: `grok-bridge-log.md` + `grok-cost-tracker.jsonl`
+- Native CLI: `grok-hybrid-log.jsonl`
+- Combined stats: `grok-hybrid.sh --stats`
+
+**Estimated Costs:**
+- Bridge: $0.50/M input tokens, $1.50/M output tokens
+- Native CLI: Similar pricing (no token counts returned)
+
+### Security
+
+**Authentication:**
+- Completed via `grok login` (OAuth)
+- Token stored securely by CLI
+- No API key in environment variables needed
+
+**Logging:**
+- All calls logged (bridge + hybrid)
+- No sensitive data in logs
+- Weekly audit recommended
+
+### Migration from Bridge-Only
+
+**Backward Compatible:**
+- `grok-bridge.sh` still works
+- Existing @grok calls unchanged
+- Hybrid adds new capabilities
+
+**When to Use Native CLI:**
+- File operations needed
+- Multi-step complex tasks
+- Interactive debugging
+- Subagent spawning
+- Web research + synthesis
+
+**When to Use Bridge:**
+- Simple Q&A
+- Cost tracking critical
+- Stateless operations
+- Scripting/automation
+
+### Troubleshooting
+
+**CLI Not Found:**
+```bash
+# Check installation
+which grok
+
+# If missing, reinstall:
+curl -fsSL https://x.ai/cli/install.sh | bash
+```
+
+**Authentication Issues:**
+```bash
+# Re-authenticate
+grok login
+
+# Or use device auth for headless
+grok login --device-auth
+```
+
+**Hybrid Routing Wrong:**
+```bash
+# Force specific mode
+bash grok-hybrid.sh --simple "question"   # Force bridge
+bash grok-hybrid.sh --complex "task"      # Force native
+```
 - Network connectivity problems
 - Rate limits exceeded
 - Model unavailable or deprecated
@@ -1582,7 +1868,7 @@ ls -la .env
 
 ---
 
-**@grok bridge enhances the 3-agent system without adding complexity. Use for tasks where Grok's unique capabilities provide clear value over existing agents.**
+**@grok bridge enhances the Core system without adding complexity. Use for tasks where Grok's unique capabilities provide clear value over existing agents.**
 
 
 ---
@@ -1610,19 +1896,34 @@ ls -la .env
 | Content | @content | `google/gemini-2.5-flash` | Content creation, documentation, GitHub showcases |
 | Grok Bridge | @grok | `grok-4.20-reasoning` | Complex reasoning, creative writing, deep analysis |
 
-### **Correct Spawn Pattern:**
+### **Correct Spawn Pattern (Context + Model):**
 
 ```python
-# ❌ WRONG (inherits parent model):
+# ❌ WRONG (inherits parent model + no context):
 sessions_spawn(agentId="quality", task="Audit project quality")
 
-# ✅ CORRECT (uses preferred model):
+# ✅ CORRECT (uses preferred model + context injection):
 sessions_spawn(
     agentId="quality",
-    model="anthropic/claude-sonnet-4-5",  # From agent-directory.json
-    task="Audit project quality"
+    model="anthropic/claude-sonnet-4-5",  # REQUIRED: From agent-directory.json
+    task="""[CONTEXT]
+Date: 2026-05-27
+Current Task: Quality audit
+Recent: Fixed context system
+
+[TASK]
+Audit project quality"""
 )
 ```
+
+### **CRITICAL: Both model AND context are REQUIRED**
+
+**Every spawn must include:**
+1. `model` parameter (from agent-directory.json)
+2. Context injection (via task parameter)
+
+**Without model parameter:** Agent inherits parent model (wrong!)
+**Without context injection:** Agent has no context (wrong!)
 
 ### **Header/Footer Accuracy Rule:**
 
