@@ -1,0 +1,14 @@
+{
+  "level": 5,
+  "name": "Scale",
+  "status": "unlocked",
+  "unlocked_at": "2026-06-24T12:15:00Z",
+  "xp_required": 750,
+  "xp_current": 600,
+  "perks": [
+    "Live trading connector",
+    "Order management",
+    "Risk controls",
+    "Paper trading"
+  ]
+}

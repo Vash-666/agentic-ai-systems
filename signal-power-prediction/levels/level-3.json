@@ -1,0 +1,14 @@
+{
+  "level": 3,
+  "name": "Beta",
+  "status": "unlocked",
+  "unlocked_at": "2026-06-24T12:15:00Z",
+  "xp_required": 450,
+  "xp_current": 300,
+  "perks": [
+    "Database infrastructure",
+    "Historical data access",
+    "Signal validation",
+    "Performance analytics"
+  ]
+}

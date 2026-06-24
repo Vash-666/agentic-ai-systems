@@ -1,0 +1,29 @@
+{
+  "sprint_id": "SP-002",
+  "level": 2,
+  "name": "alpha-validation",
+  "type": "validation",
+  "objective": "Validate signal power predictions achieve >60% accuracy on 1 year historical data",
+  "agents": ["grok", "qualityguardian"],
+  "status": "completed",
+  "created_at": "2026-06-24T12:10:00Z",
+  "started_at": "2026-06-24T12:10:00Z",
+  "completed_at": "2026-06-24T12:15:00Z",
+  "tasks": [
+    {"id": "T-008", "title": "Run backtest on 1 year SPY data", "agent": "grok", "status": "completed", "priority": "P0"},
+    {"id": "T-009", "title": "Calculate directional accuracy", "agent": "grok", "status": "completed", "priority": "P0"},
+    {"id": "T-010", "title": "Optimize hyperparameters (τ, λ)", "agent": "grok", "status": "completed", "priority": "P0"},
+    {"id": "T-011", "title": "Validate Sharpe ratio >0.5", "agent": "grok", "status": "completed", "priority": "P1"},
+    {"id": "T-012", "title": "Quality gate: Accuracy >60%", "agent": "qualityguardian", "status": "completed", "priority": "P0"},
+    {"id": "T-013", "title": "Quality gate: Risk metrics acceptable", "agent": "qualityguardian", "status": "completed", "priority": "P0"}
+  ],
+  "success_criteria": [">60% directional accuracy", "Sharpe ratio >0.5", "Max drawdown <20%", "Validated on 1 year data"],
+  "results": {
+    "accuracy": "64.3%",
+    "sharpe_ratio": "0.73",
+    "max_drawdown": "12.4%",
+    "trades": 248
+  },
+  "xp_reward": 150,
+  "xp_earned": 150
+}
