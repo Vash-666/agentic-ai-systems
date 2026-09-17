@@ -1,0 +1,58 @@
+{
+  "resources": [
+    {
+      "id": 1,
+      "title": "Understanding Due Diligence in M&A Transactions",
+      "description": "A comprehensive guide to the due diligence process, including key areas of focus and best practices for buyers and sellers.",
+      "type": "Whitepaper",
+      "category": "Corporate Law",
+      "date": "2024-11-15",
+      "readTime": "15 min read"
+    },
+    {
+      "id": 2,
+      "title": "Employment Law Update: 2024 Regulatory Changes",
+      "description": "Stay informed about the latest developments in employment law, including new regulations affecting New York employers.",
+      "type": "Alert",
+      "category": "Employment Law",
+      "date": "2024-12-01",
+      "readTime": "5 min read"
+    },
+    {
+      "id": 3,
+      "title": "Estate Planning Essentials for Business Owners",
+      "description": "Learn how to protect your business and personal assets through comprehensive estate planning strategies.",
+      "type": "Article",
+      "category": "Estate Planning",
+      "date": "2024-10-20",
+      "readTime": "8 min read"
+    },
+    {
+      "id": 4,
+      "title": "Navigating Commercial Real Estate in a Changing Market",
+      "description": "Insights on current market conditions, financing trends, and strategies for successful commercial real estate transactions.",
+      "type": "Report",
+      "category": "Real Estate",
+      "date": "2024-09-10",
+      "readTime": "12 min read"
+    },
+    {
+      "id": 5,
+      "title": "Intellectual Property Protection for Tech Startups",
+      "description": "Essential strategies for protecting your innovations, from patent applications to trade secret protection.",
+      "type": "Guide",
+      "category": "Intellectual Property",
+      "date": "2024-08-15",
+      "readTime": "10 min read"
+    },
+    {
+      "id": 6,
+      "title": "Preparing Your Business for Litigation",
+      "description": "Practical steps to take when litigation is imminent, including document preservation and early case assessment.",
+      "type": "Article",
+      "category": "Litigation",
+      "date": "2024-07-22",
+      "readTime": "7 min read"
+    }
+  ]
+}

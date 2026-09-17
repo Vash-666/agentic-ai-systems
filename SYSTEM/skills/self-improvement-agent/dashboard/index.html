@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L3 Self-Improvement Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0A0A0B;
+            color: #FAFAF9;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #262626;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #C9A84C 0%, #E5D4A1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            color: #A1A1AA;
+            font-size: 1.1rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: #141415;
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: border-color 0.3s;
+        }
+        
+        .card:hover {
+            border-color: #C9A84C;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status.active {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+        }
+        
+        .status.warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+        }
+        
+        .status.critical {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #262626;
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #A1A1AA;
+        }
+        
+        .metric-value {
+            font-weight: 500;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #262626;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #C9A84C 0%, #E5D4A1 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .recommendation {
+            background: rgba(201, 168, 76, 0.1);
+            border-left: 3px solid #C9A84C;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .recommendation-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .recommendation-title {
+            font-weight: 500;
+        }
+        
+        .priority {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .priority.critical {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+        
+        .priority.high {
+            background: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #262626;
+            color: #A1A1AA;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>L3 Self-Improvement System</h1>
+        <p class="subtitle">Meta-cognitive monitoring and optimization</p>
+    </header>
+    
+    <div class="grid">
+        <!-- System Status -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">System Status</span>
+                <span class="status active">Active</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Version</span>
+                <span class="metric-value">3.0.0-MVP</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Agents Monitored</span>
+                <span class="metric-value">7</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Last Analysis</span>
+                <span class="metric-value" id="last-analysis">Just now</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Auto-fixes Applied</span>
+                <span class="metric-value">0</span>
+            </div>
+        </div>
+        
+        <!-- Agent Health -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Agent Health</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">@switch</span>
+                <span class="metric-value">98%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 98%"></div>
+            </div>
+            <div class="metric">
+                <span class="metric-label">@content</span>
+                <span class="metric-value">94%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 94%"></div>
+            </div>
+            <div class="metric">
+                <span class="metric-label">@quality</span>
+                <span class="metric-value">97%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 97%"></div>
+            </div>
+        </div>
+        
+        <!-- Patterns Detected -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Patterns Detected</span>
+                <span class="status warning">3 Active</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Degradation</span>
+                <span class="metric-value">1</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Anomalies</span>
+                <span class="metric-value">1</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Trends</span>
+                <span class="metric-value">1</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Total</span>
+                <span class="metric-value">3</span>
+            </div>
+        </div>
+        
+        <!-- Recommendations -->
+        <div class="card" style="grid-column: 1 / -1;">
+            <div class="card-header">
+                <span class="card-title">Pending Recommendations</span>
+                <span class="status warning">2 Pending</span>
+            </div>
+            
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <span class="recommendation-title">@content: Prompt Optimization</span>
+                    <span class="priority high">HIGH</span>
+                </div>
+                <p>Success rate dropped by 12%. Review recent prompt changes.</p>
+            </div>
+            
+            <div class="recommendation">
+                <div class="recommendation-header">
+                    <span class="recommendation-title">@grok: Model Fallback</span>
+                    <span class="priority critical">CRITICAL</span>
+                </div>
+                <p>Error rate spike: 18% (z-score: 2.4). Switch to fallback model.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>P003-L3-Self-Improve | Agentic AI System v2.0.0</p>
+        <p>Built with OpenClaw</p>
+    </div>
+    
+    <script>
+        // Auto-refresh every 60 seconds
+        setInterval(() => {
+            location.reload();
+        }, 60000);
+        
+        // Update timestamp
+        document.getElementById('last-analysis').textContent = new Date().toLocaleTimeString();
+    </script>
+</body>
+</html>

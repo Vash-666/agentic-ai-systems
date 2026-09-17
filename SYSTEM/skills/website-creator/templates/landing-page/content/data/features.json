@@ -1,0 +1,40 @@
+{
+  "features": [
+    {
+      "id": "task-management",
+      "title": "Smart Task Management",
+      "description": "Organize tasks with intuitive boards, lists, and calendars. Drag-and-drop simplicity meets powerful functionality.",
+      "icon": "CheckSquare"
+    },
+    {
+      "id": "team-collaboration",
+      "title": "Real-Time Collaboration",
+      "description": "Work together seamlessly with instant updates, comments, and file sharing. Everyone stays in sync.",
+      "icon": "Users"
+    },
+    {
+      "id": "time-tracking",
+      "title": "Time Tracking",
+      "description": "Track time spent on tasks automatically. Generate detailed reports and improve team productivity.",
+      "icon": "Clock"
+    },
+    {
+      "id": "analytics",
+      "title": "Powerful Analytics",
+      "description": "Get insights into project progress, team performance, and bottlenecks with beautiful dashboards.",
+      "icon": "BarChart3"
+    },
+    {
+      "id": "integrations",
+      "title": "200+ Integrations",
+      "description": "Connect with Slack, GitHub, Google Workspace, and all your favorite tools. Workflows that work for you.",
+      "icon": "Plug"
+    },
+    {
+      "id": "security",
+      "title": "Enterprise Security",
+      "description": "Bank-level encryption, SSO, and compliance with SOC 2, GDPR, and HIPAA. Your data is safe with us.",
+      "icon": "Shield"
+    }
+  ]
+}

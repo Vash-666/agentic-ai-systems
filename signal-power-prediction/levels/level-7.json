@@ -1,0 +1,16 @@
+{
+  "level": 7,
+  "name": "Transcendent",
+  "status": "unlocked",
+  "unlocked_at": "2026-06-24T12:23:00Z",
+  "xp_required": 1050,
+  "xp_current": 1050,
+  "perks": [
+    "Institutional grade security",
+    "24/7 automated trading",
+    "Multi-strategy deployment",
+    "Real-time dashboard",
+    "Production hardened",
+    "Industry leadership"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Marcus Chen",
+  "title": "Visual Storyteller & Photographer",
+  "tagline": "Capturing moments that transcend time",
+  "bio": "Marcus Chen is an award-winning photographer based in San Francisco, specializing in portrait, landscape, and commercial photography. With over 12 years of experience, his work has been featured in National Geographic, Vogue, and numerous international exhibitions.",
+  "location": "San Francisco, CA",
+  "email": "hello@marcuschen.photo",
+  "phone": "+1 (415) 555-0187",
+  "website": "https://marcuschen.photo",
+  "social": {
+    "instagram": "https://instagram.com/marcuschen",
+    "twitter": "https://twitter.com/marcuschen",
+    "linkedin": "https://linkedin.com/in/marcuschen",
+    "behance": "https://behance.net/marcuschen"
+  },
+  "stats": {
+    "yearsExperience": 12,
+    "projectsCompleted": 500,
+    "awardsWon": 24,
+    "happyClients": 350
+  },
+  "availability": {
+    "status": "available",
+    "nextAvailable": "2 weeks",
+    "bookingNotice": "4-6 weeks for commercial projects"
+  },
+  "expertise": [
+    "Portrait Photography",
+    "Landscape & Nature",
+    "Commercial & Brand",
+    "Editorial & Fashion",
+    "Event Coverage",
+    "Fine Art Prints"
+  ]
+}

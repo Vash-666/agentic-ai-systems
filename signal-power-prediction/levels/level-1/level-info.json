@@ -1,0 +1,11 @@
+{
+    "number": 1,
+    "name": "Initiate",
+    "description": "First steps into the system",
+    "status": "unlocked",
+    "unlocked_at": "2026-06-24T15:26:29Z",
+    "required_xp": 0,
+    "max_sprints": 3,
+    "difficulty": "easy",
+    "perks": ["basic_access"]
+}

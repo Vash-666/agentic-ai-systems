@@ -1,0 +1,14 @@
+{
+  "level": 6,
+  "name": "Mastery",
+  "status": "unlocked",
+  "unlocked_at": "2026-06-24T12:15:00Z",
+  "xp_required": 900,
+  "xp_current": 750,
+  "perks": [
+    "Multi-strategy engine",
+    "Dynamic allocation",
+    "Strategy marketplace",
+    "Advanced analytics"
+  ]
+}

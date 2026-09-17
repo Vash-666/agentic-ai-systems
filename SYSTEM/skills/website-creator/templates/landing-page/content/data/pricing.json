@@ -1,0 +1,53 @@
+{
+  "plans": [
+    {
+      "name": "Starter",
+      "price": "$0",
+      "period": "forever",
+      "description": "Perfect for individuals and small projects",
+      "features": [
+        "Up to 3 projects",
+        "5 team members",
+        "Basic task management",
+        "Mobile app access",
+        "Email support"
+      ],
+      "cta": "Get Started Free",
+      "popular": false
+    },
+    {
+      "name": "Pro",
+      "price": "$12",
+      "period": "per user/month",
+      "description": "For growing teams that need more power",
+      "features": [
+        "Unlimited projects",
+        "Unlimited team members",
+        "Advanced analytics",
+        "Time tracking",
+        "Priority support",
+        "Custom workflows",
+        "API access"
+      ],
+      "cta": "Start Free Trial",
+      "popular": true
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom",
+      "period": "contact us",
+      "description": "For large organizations with advanced needs",
+      "features": [
+        "Everything in Pro",
+        "SSO & SAML",
+        "Advanced security",
+        "Dedicated success manager",
+        "Custom integrations",
+        "SLA guarantee",
+        "On-premise option"
+      ],
+      "cta": "Contact Sales",
+      "popular": false
+    }
+  ]
+}

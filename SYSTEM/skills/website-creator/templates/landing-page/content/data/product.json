@@ -1,0 +1,50 @@
+{
+  "name": "TaskFlow Pro",
+  "tagline": "Project Management That Just Works",
+  "description": "The intuitive project management platform that helps teams plan, track, and deliver projects on time. Built for modern teams who value simplicity and power.",
+  "shortDescription": "Streamline your projects, boost team productivity, and hit every deadline.",
+  "hero": {
+    "headline": "Project Management That Just Works",
+    "subheadline": "Streamline your workflow, boost team productivity, and deliver projects on time — every time.",
+    "ctaPrimary": "Start Free Trial",
+    "ctaSecondary": "Watch Demo"
+  },
+  "problem": {
+    "headline": "Still Managing Projects in Spreadsheets?",
+    "description": "75% of projects fail due to poor communication and lack of visibility. Don't let your team fall into the same trap."
+  },
+  "solution": {
+    "headline": "Everything You Need in One Place",
+    "description": "TaskFlow Pro brings your tasks, timeline, and team together. No more switching between tools or losing track of progress."
+  },
+  "socialProof": {
+    "headline": "Trusted by 10,000+ Teams Worldwide",
+    "logos": ["Acme Corp", "Globex", "Initech", "Umbrella", "Massive Dynamic"]
+  },
+  "howItWorks": {
+    "headline": "Get Started in 3 Simple Steps",
+    "steps": [
+      {
+        "number": 1,
+        "title": "Create Your Project",
+        "description": "Set up your project in seconds with our intuitive templates."
+      },
+      {
+        "number": 2,
+        "title": "Invite Your Team",
+        "description": "Add team members and assign tasks with clear deadlines."
+      },
+      {
+        "number": 3,
+        "title": "Track & Deliver",
+        "description": "Monitor progress in real-time and hit your goals."
+      }
+    ]
+  },
+  "finalCta": {
+    "headline": "Ready to Transform Your Project Management?",
+    "subheadline": "Join 10,000+ teams already using TaskFlow Pro.",
+    "cta": "Start Your Free 14-Day Trial",
+    "guarantee": "No credit card required. Cancel anytime."
+  }
+}

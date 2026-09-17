@@ -81,4 +81,10 @@ v3/
 
 ---
 
+## Previous Versions
+
+- [v2.0 Documentation](docs/v2.0-README.md) — Pre-v3.0 system
+
+---
+
 *v3.0 — Built with best practices. Validated by agents. Ready for production.*

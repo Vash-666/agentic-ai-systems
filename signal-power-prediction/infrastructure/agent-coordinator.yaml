@@ -1,0 +1,509 @@
+# Agent Coordination Configuration
+# Signal Power Prediction System - Level-Game Infrastructure
+# CODE RED - Full Performance Mode
+
+# ============================================
+# AGENT REGISTRY
+# ============================================
+
+agents:
+  # Core Architecture Team
+  - handle: "@architect"
+    name: "System Architect"
+    role: "architect"
+    level: 5
+    skills:
+      - system-design
+      - api-design
+      - database-design
+      - scalability-planning
+    specializations:
+      - distributed-systems
+      - microservices
+      - event-driven-architecture
+    coordination:
+      can_lead: true
+      can_delegate: true
+      max_concurrent_tasks: 3
+      preferred_task_types:
+        - design
+        - architecture
+        - review
+    
+  - handle: "@builder"
+    name: "Code Builder"
+    role: "builder"
+    level: 4
+    skills:
+      - implementation
+      - refactoring
+      - testing
+      - debugging
+    specializations:
+      - backend-development
+      - api-implementation
+      - performance-optimization
+    coordination:
+      can_lead: false
+      can_delegate: false
+      max_concurrent_tasks: 5
+      preferred_task_types:
+        - code
+        - implementation
+        - bugfix
+    
+  - handle: "@reviewer"
+    name: "Code Reviewer"
+    role: "reviewer"
+    level: 5
+    skills:
+      - code-review
+      - security-audit
+      - quality-assurance
+      - standards-enforcement
+    specializations:
+      - security-review
+      - performance-review
+      - best-practices
+    coordination:
+      can_lead: true
+      can_delegate: true
+      max_concurrent_tasks: 4
+      preferred_task_types:
+        - review
+        - audit
+        - quality-check
+    
+  - handle: "@tester"
+    name: "Quality Tester"
+    role: "tester"
+    level: 3
+    skills:
+      - test-design
+      - automated-testing
+      - load-testing
+      - regression-testing
+    specializations:
+      - unit-testing
+      - integration-testing
+      - e2e-testing
+    coordination:
+      can_lead: false
+      can_delegate: false
+      max_concurrent_tasks: 4
+      preferred_task_types:
+        - test
+        - validation
+        - qa
+    
+  - handle: "@coordinator"
+    name: "Sprint Coordinator"
+    role: "coordinator"
+    level: 6
+    skills:
+      - sprint-planning
+      - task-assignment
+      - progress-tracking
+      - conflict-resolution
+    specializations:
+      - agile-methodologies
+      - team-coordination
+      - process-optimization
+    coordination:
+      can_lead: true
+      can_delegate: true
+      max_concurrent_tasks: 2
+      preferred_task_types:
+        - coordination
+        - planning
+        - management
+    
+  - handle: "@scaffolder"
+    name: "Infrastructure Scaffolder"
+    role: "builder"
+    level: 4
+    skills:
+      - infrastructure-setup
+      - ci-cd
+      - automation
+      - tooling
+    specializations:
+      - devops
+      - build-systems
+      - deployment-pipelines
+    coordination:
+      can_lead: false
+      can_delegate: false
+      max_concurrent_tasks: 3
+      preferred_task_types:
+        - infrastructure
+        - automation
+        - setup
+
+# ============================================
+# COORDINATION RULES
+# ============================================
+
+coordination_rules:
+  # Task Assignment Rules
+  assignment:
+    - rule: "match_skills"
+      description: "Assign tasks to agents with matching skills"
+      priority: high
+      
+    - rule: "load_balancing"
+      description: "Distribute tasks evenly across available agents"
+      priority: high
+      
+    - rule: "specialization_bonus"
+      description: "Prioritize agents with task-specific specializations"
+      priority: medium
+      
+    - rule: "level_appropriate"
+      description: "Match task difficulty to agent level"
+      priority: medium
+      
+    - rule: "max_concurrent_respect"
+      description: "Never exceed agent's max_concurrent_tasks"
+      priority: critical
+
+  # Escalation Rules
+  escalation:
+    - trigger: "task_blocked"
+      action: "notify_coordinator"
+      timeout_minutes: 30
+      
+    - trigger: "task_failed"
+      action: "escalate_to_lead"
+      timeout_minutes: 0
+      
+    - trigger: "deadline_approaching"
+      action: "notify_team"
+      threshold_hours: 4
+      
+    - trigger: "agent_overloaded"
+      action: "redistribute_tasks"
+      threshold_percent: 90
+
+  # Communication Rules
+  communication:
+    - event: "task_assigned"
+      notify: [assigned_agent, coordinator]
+      
+    - event: "task_completed"
+      notify: [coordinator, reviewers]
+      
+    - event: "sprint_started"
+      notify: [all_agents]
+      
+    - event: "sprint_completed"
+      notify: [all_agents]
+      
+    - event: "level_unlocked"
+      notify: [all_agents]
+
+# ============================================
+# TASK TEMPLATES
+# ============================================
+
+task_templates:
+  # Design Tasks
+  design:
+    default_assignee: "@architect"
+    estimated_hours: 4
+    review_required: true
+    reviewer: "@reviewer"
+    xp_reward: 25
+    
+  # Implementation Tasks
+  code:
+    default_assignee: "@builder"
+    estimated_hours: 6
+    review_required: true
+    reviewer: "@reviewer"
+    xp_reward: 30
+    
+  # Review Tasks
+  review:
+    default_assignee: "@reviewer"
+    estimated_hours: 2
+    review_required: false
+    xp_reward: 15
+    
+  # Testing Tasks
+  test:
+    default_assignee: "@tester"
+    estimated_hours: 3
+    review_required: true
+    reviewer: "@reviewer"
+    xp_reward: 20
+    
+  # Infrastructure Tasks
+  infrastructure:
+    default_assignee: "@scaffolder"
+    estimated_hours: 4
+    review_required: true
+    reviewer: "@architect"
+    xp_reward: 25
+    
+  # Coordination Tasks
+  coordination:
+    default_assignee: "@coordinator"
+    estimated_hours: 2
+    review_required: false
+    xp_reward: 15
+
+# ============================================
+# SPRINT PHASES
+# ============================================
+
+sprint_phases:
+  planning:
+    duration_hours: 2
+    lead_agent: "@coordinator"
+    required_agents:
+      - "@architect"
+      - "@coordinator"
+    activities:
+      - review_objectives
+      - break_down_tasks
+      - estimate_effort
+      - assign_agents
+      
+  execution:
+    duration_hours: null  # Until completion
+    lead_agent: "@coordinator"
+    activities:
+      - daily_standup
+      - task_execution
+      - progress_tracking
+      - blocker_resolution
+      
+  review:
+    duration_hours: 4
+    lead_agent: "@reviewer"
+    required_agents:
+      - "@reviewer"
+      - "@tester"
+    activities:
+      - code_review
+      - testing
+      - documentation_review
+      - acceptance_criteria_check
+      
+  retrospective:
+    duration_hours: 1
+    lead_agent: "@coordinator"
+    activities:
+      - what_went_well
+      - what_to_improve
+      - lessons_learned
+      - xp_awards
+
+# ============================================
+# HOOKS & AUTOMATION
+# ============================================
+
+hooks:
+  # Sprint Lifecycle Hooks
+  on_sprint_create:
+    - action: "create_directory_structure"
+    - action: "initialize_manifest"
+    - action: "notify_coordinator"
+    
+  on_sprint_start:
+    - action: "activate_sprint_marker"
+    - action: "generate_agent_assignments"
+    - action: "notify_all_agents"
+    - action: "start_progress_tracking"
+    
+  on_task_complete:
+    - action: "update_progress"
+    - action: "award_task_xp"
+    - action: "trigger_review_if_needed"
+    - action: "check_sprint_completion"
+    
+  on_sprint_complete:
+    - action: "calculate_final_xp"
+    - action: "award_sprint_bonus"
+    - action: "unlock_next_level"
+    - action: "generate_report"
+    - action: "notify_completion"
+    
+  on_level_unlock:
+    - action: "update_level_status"
+    - action: "announce_unlock"
+    - action: "update_agent_capabilities"
+
+# ============================================
+# NOTIFICATIONS
+# ============================================
+
+notifications:
+  channels:
+    - name: "agent_dm"
+      type: "direct"
+      enabled: true
+      
+    - name: "sprint_channel"
+      type: "broadcast"
+      enabled: true
+      
+    - name: "events_log"
+      type: "persistent"
+      enabled: true
+      path: "./events/"
+
+  templates:
+    task_assigned:
+      title: "🎯 New Task Assigned"
+      message: "You have been assigned to: {task_title}"
+      priority: high
+      
+    task_completed:
+      title: "✅ Task Completed"
+      message: "{agent} completed: {task_title} (+{xp} XP)"
+      priority: normal
+      
+    sprint_started:
+      title: "🚀 Sprint Started"
+      message: "Level {level}: {sprint_name} is now ACTIVE!"
+      priority: high
+      
+    sprint_completed:
+      title: "🎉 Sprint Completed!"
+      message: "Level {level} finished! Rating: {rating}/5 | Total XP: {total_xp}"
+      priority: high
+      
+    level_unlocked:
+      title: "🔓 Level Unlocked!"
+      message: "Level {level} is now available!"
+      priority: high
+      
+    xp_awarded:
+      title: "⭐ XP Awarded"
+      message: "+{xp} XP for: {reason}"
+      priority: normal
+
+# ============================================
+# MONITORING & METRICS
+# ============================================
+
+monitoring:
+  metrics:
+    - name: "sprint_velocity"
+      description: "Tasks completed per hour"
+      collection_interval: "5m"
+      
+    - name: "agent_utilization"
+      description: "Percentage of agent capacity used"
+      collection_interval: "5m"
+      
+    - name: "task_completion_rate"
+      description: "Ratio of completed to total tasks"
+      collection_interval: "1m"
+      
+    - name: "blocker_count"
+      description: "Number of blocked tasks"
+      collection_interval: "1m"
+      
+    - name: "xp_distribution"
+      description: "XP earned by each agent"
+      collection_interval: "1h"
+
+  alerts:
+    - condition: "blocker_count > 0"
+      severity: warning
+      notify: ["@coordinator"]
+      
+    - condition: "sprint_velocity < expected"
+      severity: warning
+      notify: ["@coordinator", "@architect"]
+      
+    - condition: "deadline_approaching < 4h"
+      severity: critical
+      notify: ["all"]
+      
+    - condition: "agent_utilization > 95%"
+      severity: warning
+      notify: ["@coordinator"]
+
+# ============================================
+# XP & PROGRESSION
+# ============================================
+
+progression:
+  # XP Formulas
+  xp_formulas:
+    task_completion:
+      base: 10
+      priority_multiplier:
+        critical: 2.0
+        high: 1.5
+        medium: 1.0
+        low: 0.5
+      type_bonus:
+        code: 5
+        design: 5
+        review: 3
+        test: 4
+        infrastructure: 5
+        
+    sprint_bonus:
+      base_formula: "level * 25"
+      completion_bonus: "total_tasks * 5"
+      
+    level_up:
+      formula: "sqrt(total_xp / 100) + 1"
+      
+  # Level Thresholds
+  levels:
+    - number: 1
+      name: "Initiate"
+      required_xp: 0
+      perks: ["basic_access"]
+      
+    - number: 2
+      name: "Apprentice"
+      required_xp: 100
+      perks: ["task_creation", "self_assignment"]
+      
+    - number: 3
+      name: "Journeyman"
+      required_xp: 300
+      perks: ["code_review", "mentoring"]
+      
+    - number: 4
+      name: "Specialist"
+      required_xp: 600
+      perks: ["architecture_input", "tech_decisions"]
+      
+    - number: 5
+      name: "Expert"
+      required_xp: 1000
+      perks: ["sprint_lead", "task_delegation"]
+      
+    - number: 6
+      name: "Master"
+      required_xp: 1500
+      perks: ["full_leadership", "process_changes"]
+      
+    - number: 7
+      name: "Grandmaster"
+      required_xp: 2100
+      perks: ["cross_team_coordination"]
+      
+    - number: 8
+      name: "Legend"
+      required_xp: 2800
+      perks: ["strategic_planning"]
+      
+    - number: 9
+      name: "Mythic"
+      required_xp: 3600
+      perks: ["system_ownership"]
+      
+    - number: 10
+      name: "Transcendent"
+      required_xp: 4500
+      perks: ["full_autonomy", "legend_status"]

@@ -1,0 +1,22 @@
+{
+  "sprint_id": "SP-005",
+  "level": 5,
+  "name": "live-trading",
+  "type": "feature",
+  "objective": "Build broker integration for live trading execution",
+  "agents": ["scaffolder"],
+  "status": "completed",
+  "created_at": "2026-06-24T12:10:00Z",
+  "started_at": "2026-06-24T12:10:00Z",
+  "completed_at": "2026-06-24T12:22:00Z",
+  "tasks": [
+    {"id": "T-024", "title": "Alpaca API connector", "agent": "scaffolder", "status": "completed", "priority": "P0"},
+    {"id": "T-025", "title": "Order management system", "agent": "scaffolder", "status": "completed", "priority": "P0"},
+    {"id": "T-026", "title": "Position tracking", "agent": "scaffolder", "status": "completed", "priority": "P0"},
+    {"id": "T-027", "title": "Risk management (max position, stop loss)", "agent": "scaffolder", "status": "completed", "priority": "P0"},
+    {"id": "T-028", "title": "Paper trading mode", "agent": "scaffolder", "status": "completed", "priority": "P1"}
+  ],
+  "success_criteria": ["Broker connected", "Orders executing", "Positions tracked", "Risk controls active"],
+  "xp_reward": 150,
+  "xp_earned": 150
+}

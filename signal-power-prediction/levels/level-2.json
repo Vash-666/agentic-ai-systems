@@ -1,0 +1,14 @@
+{
+  "level": 2,
+  "name": "Alpha",
+  "status": "unlocked",
+  "unlocked_at": "2026-06-24T12:10:00Z",
+  "xp_required": 300,
+  "xp_current": 150,
+  "perks": [
+    "Historical data access",
+    "Backtesting capabilities",
+    "Strategy validation",
+    "Performance analytics"
+  ]
+}

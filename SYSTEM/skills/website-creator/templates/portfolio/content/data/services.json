@@ -1,0 +1,115 @@
+{
+  "services": [
+    {
+      "id": "portrait",
+      "title": "Portrait Photography",
+      "description": "Professional portrait sessions tailored to capture your authentic self. From headshots to creative concepts, we create images that tell your story.",
+      "features": [
+        "2-4 hour session",
+        "Multiple outfit changes",
+        "Professional retouching",
+        "Online gallery",
+        "Print release included"
+      ],
+      "price": "From $800",
+      "icon": "Camera"
+    },
+    {
+      "id": "commercial",
+      "title": "Commercial & Brand",
+      "description": "Elevate your brand with striking commercial photography. Product shots, lifestyle imagery, and campaign visuals that drive engagement.",
+      "features": [
+        "Full-day coverage",
+        "Art direction",
+        "Multiple setups",
+        "High-res deliverables",
+        "Usage rights included"
+      ],
+      "price": "From $2,500",
+      "icon": "Briefcase"
+    },
+    {
+      "id": "editorial",
+      "title": "Editorial & Fashion",
+      "description": "Magazine-quality editorial photography for publications, lookbooks, and fashion campaigns. Bringing creative visions to life.",
+      "features": [
+        "Full production support",
+        "Location scouting",
+        "Styling consultation",
+        "Fast turnaround",
+        "Publication-ready files"
+      ],
+      "price": "From $3,500",
+      "icon": "Sparkles"
+    },
+    {
+      "id": "events",
+      "title": "Event Coverage",
+      "description": "Comprehensive documentation of your special events. Corporate gatherings, galas, and celebrations captured with an artistic eye.",
+      "features": [
+        "Full event coverage",
+        "Same-day previews",
+        "Candid & posed shots",
+        "Online gallery",
+        "Custom album design"
+      ],
+      "price": "From $1,500",
+      "icon": "Calendar"
+    },
+    {
+      "id": "landscape",
+      "title": "Fine Art Prints",
+      "description": "Museum-quality landscape and fine art photography for interior design, hospitality, and private collections.",
+      "features": [
+        "Large format prints",
+        "Archival materials",
+        "Custom framing",
+        "Limited editions",
+        "Certificate of authenticity"
+      ],
+      "price": "From $600",
+      "icon": "Mountain"
+    },
+    {
+      "id": "workshops",
+      "title": "Photography Workshops",
+      "description": "Learn the art and craft of photography through personalized workshops. One-on-one mentoring and group sessions available.",
+      "features": [
+        "Hands-on instruction",
+        "Location shoots",
+        "Post-processing lessons",
+        "Portfolio review",
+        "Ongoing mentorship"
+      ],
+      "price": "From $400",
+      "icon": "GraduationCap"
+    }
+  ],
+  "process": [
+    {
+      "step": 1,
+      "title": "Discovery",
+      "description": "We begin with a consultation to understand your vision, goals, and the story you want to tell."
+    },
+    {
+      "step": 2,
+      "title": "Planning",
+      "description": "Detailed planning including location scouting, styling, lighting design, and shot lists."
+    },
+    {
+      "step": 3,
+      "title": "Creation",
+      "description": "The photoshoot itself — a collaborative process where we bring the vision to life."
+    },
+    {
+      "step": 4,
+      "title": "Refinement",
+      "description": "Careful selection and professional retouching to ensure every image is perfect."
+    },
+    {
+      "step": 5,
+      "title": "Delivery",
+      "description": "Your final images delivered in multiple formats, ready for print and digital use."
+    }
+  ]
+}

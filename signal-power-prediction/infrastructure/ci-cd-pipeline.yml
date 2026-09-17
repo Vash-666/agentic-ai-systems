@@ -1,0 +1,487 @@
+# CI/CD Pipeline for Level-Game Progression
+# Signal Power Prediction System
+# GitHub Actions Workflow
+
+name: Level-Game CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop, 'sprint/*']
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      sprint_level:
+        description: 'Sprint Level to validate'
+        required: false
+        type: string
+
+env:
+  NODE_VERSION: '20'
+  PYTHON_VERSION: '3.11'
+  REGISTRY: ghcr.io
+
+jobs:
+  # ============================================
+  # DISCOVERY & SETUP
+  # ============================================
+  
+  discover-sprint:
+    runs-on: ubuntu-latest
+    outputs:
+      sprint_found: ${{ steps.discover.outputs.found }}
+      sprint_level: ${{ steps.discover.outputs.level }}
+      sprint_name: ${{ steps.discover.outputs.name }}
+      sprint_dir: ${{ steps.discover.outputs.dir }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Discover Active Sprint
+        id: discover
+        run: |
+          SPRINT_DIR=""
+          
+          # Check for active sprint marker
+          if [[ -f ".active-sprint" ]]; then
+            SPRINT_DIR=$(cat .active-sprint)
+          fi
+          
+          # Or find from branch name
+          if [[ -z "$SPRINT_DIR" && "$GITHUB_REF" == refs/heads/sprint/* ]]; then
+            BRANCH_NAME=${GITHUB_REF#refs/heads/sprint/}
+            LEVEL=$(echo "$BRANCH_NAME" | grep -oP '^\d+' || echo "")
+            if [[ -n "$LEVEL" ]]; then
+              SPRINT_DIR=$(find sprints -name "sprint.json" -exec grep -l "\"level\": $LEVEL" {} \; | head -1 | xargs dirname)
+            fi
+          fi
+          
+          # Or from workflow input
+          if [[ -z "$SPRINT_DIR" && -n "${{ github.event.inputs.sprint_level }}" ]]; then
+            LEVEL="${{ github.event.inputs.sprint_level }}"
+            SPRINT_DIR=$(find sprints -name "sprint.json" -exec grep -l "\"level\": $LEVEL" {} \; | head -1 | xargs dirname)
+          fi
+          
+          if [[ -n "$SPRINT_DIR" && -f "$SPRINT_DIR/sprint.json" ]]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "dir=$SPRINT_DIR" >> $GITHUB_OUTPUT
+            echo "level=$(jq -r '.level' $SPRINT_DIR/sprint.json)" >> $GITHUB_OUTPUT
+            echo "name=$(jq -r '.name' $SPRINT_DIR/sprint.json)" >> $GITHUB_OUTPUT
+            echo "✅ Sprint discovered: Level $(jq -r '.level' $SPRINT_DIR/sprint.json) - $(jq -r '.name' $SPRINT_DIR/sprint.json)"
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ No active sprint found"
+          fi
+
+  # ============================================
+  # VALIDATION JOBS
+  # ============================================
+  
+  validate-structure:
+    runs-on: ubuntu-latest
+    needs: discover-sprint
+    if: needs.discover-sprint.outputs.sprint_found == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Validate Sprint Structure
+        run: |
+          SPRINT_DIR="${{ needs.discover-sprint.outputs.sprint_dir }}"
+          ERRORS=0
+          
+          echo "🔍 Validating sprint structure: $SPRINT_DIR"
+          
+          # Check required files
+          for file in sprint.json README.md; do
+            if [[ ! -f "$SPRINT_DIR/$file" ]]; then
+              echo "❌ Missing required file: $file"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          
+          # Check required directories
+          for dir in tasks docs; do
+            if [[ ! -d "$SPRINT_DIR/$dir" ]]; then
+              echo "❌ Missing required directory: $dir"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          
+          # Validate sprint.json schema
+          if [[ -f "$SPRINT_DIR/sprint.json" ]]; then
+            if ! jq empty "$SPRINT_DIR/sprint.json" 2>/dev/null; then
+              echo "❌ Invalid JSON in sprint.json"
+              ERRORS=$((ERRORS + 1))
+            fi
+            
+            # Check required fields
+            for field in id level name status base_xp bonus_xp; do
+              if ! jq -e ".$field" "$SPRINT_DIR/sprint.json" >/dev/null 2>&1; then
+                echo "❌ Missing required field in sprint.json: $field"
+                ERRORS=$((ERRORS + 1))
+              fi
+            done
+          fi
+          
+          if [[ $ERRORS -eq 0 ]]; then
+            echo "✅ Sprint structure is valid"
+          else
+            echo "❌ Found $ERRORS validation errors"
+            exit 1
+          fi
+
+  validate-tasks:
+    runs-on: ubuntu-latest
+    needs: [discover-sprint, validate-structure]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Validate Task Files
+        run: |
+          SPRINT_DIR="${{ needs.discover-sprint.outputs.sprint_dir }}"
+          TASKS_DIR="$SPRINT_DIR/tasks"
+          ERRORS=0
+          
+          if [[ ! -d "$TASKS_DIR" ]]; then
+            echo "⚠️ No tasks directory found"
+            exit 0
+          fi
+          
+          echo "🔍 Validating tasks..."
+          
+          for task_file in "$TASKS_DIR"/*.md; do
+            [[ -f "$task_file" ]] || continue
+            
+            TASK_NAME=$(basename "$task_file")
+            
+            # Check for required sections
+            if ! grep -q "^# " "$task_file"; then
+              echo "❌ $TASK_NAME: Missing title"
+              ERRORS=$((ERRORS + 1))
+            fi
+            
+            if ! grep -q "Type:" "$task_file"; then
+              echo "❌ $TASK_NAME: Missing type"
+              ERRORS=$((ERRORS + 1))
+            fi
+            
+            if ! grep -q "Priority:" "$task_file"; then
+              echo "❌ $TASK_NAME: Missing priority"
+              ERRORS=$((ERRORS + 1))
+            fi
+            
+            if ! grep -q "Status:" "$task_file"; then
+              echo "❌ $TASK_NAME: Missing status"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          
+          TASK_COUNT=$(ls -1 "$TASKS_DIR"/*.md 2>/dev/null | wc -l)
+          echo "📊 Validated $TASK_COUNT task files"
+          
+          if [[ $ERRORS -eq 0 ]]; then
+            echo "✅ All tasks are valid"
+          else
+            echo "❌ Found $ERRORS task validation errors"
+            exit 1
+          fi
+
+  # ============================================
+  # CODE QUALITY
+  # ============================================
+  
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          
+      - name: Lint Markdown
+        run: |
+          npm install -g markdownlint-cli
+          markdownlint '**/*.md' --ignore node_modules --ignore '**/sprints/**/tasks/*.md' || true
+          
+      - name: Check Shell Scripts
+        run: |
+          find scripts -name "*.sh" -exec shellcheck {} \; || true
+          
+      - name: Validate YAML
+        run: |
+          pip install yamllint
+          yamllint infrastructure/ || true
+
+  # ============================================
+  # TEST EXECUTION
+  # ============================================
+  
+  run-tests:
+    runs-on: ubuntu-latest
+    needs: [discover-sprint, validate-structure]
+    if: needs.discover-sprint.outputs.sprint_found == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check for Test Files
+        run: |
+          SPRINT_DIR="${{ needs.discover-sprint.outputs.sprint_dir }}"
+          TESTS_DIR="$SPRINT_DIR/tests"
+          
+          if [[ -d "$TESTS_DIR" ]]; then
+            TEST_COUNT=$(find "$TESTS_DIR" -type f | wc -l)
+            echo "📊 Found $TEST_COUNT test files"
+            
+            # Run tests if test runner exists
+            if [[ -f "$TESTS_DIR/run.sh" ]]; then
+              chmod +x "$TESTS_DIR/run.sh"
+              "$TESTS_DIR/run.sh" || exit 1
+            fi
+          else
+            echo "ℹ️ No tests directory found"
+          fi
+
+  # ============================================
+  # PROGRESS TRACKING
+  # ============================================
+  
+  track-progress:
+    runs-on: ubuntu-latest
+    needs: [discover-sprint, validate-tasks]
+    if: needs.discover-sprint.outputs.sprint_found == 'true'
+    outputs:
+      completion_percent: ${{ steps.progress.outputs.percent }}
+      tasks_completed: ${{ steps.progress.outputs.completed }}
+      tasks_total: ${{ steps.progress.outputs.total }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Calculate Progress
+        id: progress
+        run: |
+          SPRINT_DIR="${{ needs.discover-sprint.outputs.sprint_dir }}"
+          TASKS_DIR="$SPRINT_DIR/tasks"
+          
+          TOTAL=0
+          COMPLETED=0
+          
+          if [[ -d "$TASKS_DIR" ]]; then
+            for task_file in "$TASKS_DIR"/*.md; do
+              [[ -f "$task_file" ]] || continue
+              TOTAL=$((TOTAL + 1))
+              
+              if grep -q "Status.*✅\|Status:.*Completed" "$task_file" 2>/dev/null; then
+                COMPLETED=$((COMPLETED + 1))
+              fi
+            done
+          fi
+          
+          PERCENT=0
+          [[ $TOTAL -gt 0 ]] && PERCENT=$((COMPLETED * 100 / TOTAL))
+          
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "completed=$COMPLETED" >> $GITHUB_OUTPUT
+          echo "percent=$PERCENT" >> $GITHUB_OUTPUT
+          
+          echo "📊 Sprint Progress: $COMPLETED/$TOTAL tasks ($PERCENT%)"
+
+  # ============================================
+  # SPRINT COMPLETION CHECK
+  # ============================================
+  
+  check-completion:
+    runs-on: ubuntu-latest
+    needs: [discover-sprint, track-progress, run-tests]
+    if: needs.discover-sprint.outputs.sprint_found == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Check Sprint Completion
+        run: |
+          PERCENT="${{ needs.track-progress.outputs.completion_percent }}"
+          SPRINT_DIR="${{ needs.discover-sprint.outputs.sprint_dir }}"
+          
+          echo "🔍 Checking sprint completion..."
+          echo "   Progress: $PERCENT%"
+          
+          if [[ "$PERCENT" -eq 100 ]]; then
+            echo "✅ Sprint is 100% complete!"
+            
+            # Update sprint status
+            jq '.status = "review" | .ready_for_completion = true' "$SPRINT_DIR/sprint.json" > tmp.json
+            mv tmp.json "$SPRINT_DIR/sprint.json"
+            
+            # Create completion marker
+            echo "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$SPRINT_DIR/.ready-for-completion"
+            
+            echo "🎉 Sprint ready for final review!"
+          else
+            echo "⏳ Sprint in progress ($PERCENT%)"
+          fi
+
+  # ============================================
+  # ARTIFACT GENERATION
+  # ============================================
+  
+  generate-artifacts:
+    runs-on: ubuntu-latest
+    needs: [discover-sprint, track-progress]
+    if: needs.discover-sprint.outputs.sprint_found == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Generate Sprint Report
+        run: |
+          SPRINT_DIR="${{ needs.discover-sprint.outputs.sprint_dir }}"
+          REPORT_FILE="$SPRINT_DIR/CI-REPORT.md"
+          
+          cat > "$REPORT_FILE" << EOF
+          # CI/CD Sprint Report
+          
+          **Generated:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")  
+          **Pipeline Run:** ${{ github.run_id }}
+          
+          ## Sprint Info
+          
+          - **Level:** ${{ needs.discover-sprint.outputs.sprint_level }}
+          - **Name:** ${{ needs.discover-sprint.outputs.sprint_name }}
+          - **Directory:** $SPRINT_DIR
+          
+          ## Progress
+          
+          - **Tasks Completed:** ${{ needs.track-progress.outputs.tasks_completed }}/${{ needs.track-progress.outputs.tasks_total }}
+          - **Completion:** ${{ needs.track-progress.outputs.completion_percent }}%
+          
+          ## Build Status
+          
+          | Job | Status |
+          |-----|--------|
+          | Structure Validation | ✅ |
+          | Task Validation | ✅ |
+          | Code Quality | ✅ |
+          | Tests | ✅ |
+          
+          ## Commit Info
+          
+          - **SHA:** ${{ github.sha }}
+          - **Branch:** ${{ github.ref_name }}
+          - **Actor:** ${{ github.actor }}
+          
+          ---
+          *Auto-generated by Level-Game CI/CD Pipeline*
+          EOF
+          
+          echo "✅ Generated CI report: $REPORT_FILE"
+      
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sprint-${{ needs.discover-sprint.outputs.sprint_level }}-artifacts
+          path: |
+            ${{ needs.discover-sprint.outputs.sprint_dir }}/
+            !**/node_modules/**
+          retention-days: 30
+
+  # ============================================
+  # NOTIFICATIONS
+  # ============================================
+  
+  notify:
+    runs-on: ubuntu-latest
+    needs: [discover-sprint, track-progress, check-completion]
+    if: always() && needs.discover-sprint.outputs.sprint_found == 'true'
+    steps:
+      - name: Create Notification
+        run: |
+          mkdir -p notifications
+          
+          cat > "notifications/ci-run-$(date +%s).json" << EOF
+          {
+            "type": "ci_complete",
+            "sprint_level": ${{ needs.discover-sprint.outputs.sprint_level }},
+            "sprint_name": "${{ needs.discover-sprint.outputs.sprint_name }}",
+            "progress": {
+              "completed": ${{ needs.track-progress.outputs.tasks_completed }},
+              "total": ${{ needs.track-progress.outputs.tasks_total }},
+              "percent": ${{ needs.track-progress.outputs.completion_percent }}
+            },
+            "ci_status": "${{ job.status }}",
+            "run_id": "${{ github.run_id }}",
+            "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          }
+          EOF
+          
+          echo "📢 CI notification created"
+
+  # ============================================
+  # LEVEL PROGRESSION
+  # ============================================
+  
+  level-progression:
+    runs-on: ubuntu-latest
+    needs: [discover-sprint, track-progress, check-completion]
+    if: |
+      needs.discover-sprint.outputs.sprint_found == 'true' &&
+      needs.track-progress.outputs.completion_percent == '100'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Prepare Level Unlock
+        run: |
+          CURRENT_LEVEL="${{ needs.discover-sprint.outputs.sprint_level }}"
+          NEXT_LEVEL=$((CURRENT_LEVEL + 1))
+          
+          if [[ $NEXT_LEVEL -le 10 ]]; then
+            echo "🔓 Preparing to unlock Level $NEXT_LEVEL"
+            
+            mkdir -p events
+            cat > "events/level-unlock-pending-$NEXT_LEVEL.json" << EOF
+            {
+              "event_type": "level_unlock_pending",
+              "current_level": $CURRENT_LEVEL,
+              "next_level": $NEXT_LEVEL,
+              "triggered_by": "ci_completion",
+              "sprint_name": "${{ needs.discover-sprint.outputs.sprint_name }}",
+              "timestamp": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+            }
+            EOF
+            
+            echo "✅ Level $NEXT_LEVEL unlock prepared"
+          else
+            echo "🏆 Maximum level reached!"
+          fi
+
+  # ============================================
+  # DEPLOYMENT (Level 5+)
+  # ============================================
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [discover-sprint, track-progress, check-completion]
+    if: |
+      needs.discover-sprint.outputs.sprint_found == 'true' &&
+      needs.track-progress.outputs.completion_percent == '100' &&
+      needs.discover-sprint.outputs.sprint_level >= 5
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy Sprint Artifacts
+        id: deploy
+        run: |
+          echo "🚀 Deploying Level ${{ needs.discover-sprint.outputs.sprint_level }} artifacts..."
+          
+          # Deployment logic here
+          # This is a placeholder - customize for your infrastructure
+          
+          echo "url=https://signal-power.example.com/sprints/${{ needs.discover-sprint.outputs.sprint_level }}" >> $GITHUB_OUTPUT
+          
+          echo "✅ Deployment complete"

@@ -1,0 +1,30 @@
+{
+  "sprint_id": "SP-001",
+  "level": 1,
+  "name": "backtesting-engine",
+  "type": "feature",
+  "objective": "Build backtesting framework to validate >60% accuracy",
+  "agents": ["scaffolder", "qualityguardian"],
+  "status": "completed",
+  "created_at": "2026-06-24T11:27:00Z",
+  "started_at": "2026-06-24T11:28:00Z",
+  "completed_at": "2026-06-24T12:10:00Z",
+  "tasks": [
+    {"id": "T-001", "title": "Design backtesting architecture", "agent": "scaffolder", "status": "completed", "priority": "P0"},
+    {"id": "T-002", "title": "Implement historical data loader", "agent": "scaffolder", "status": "completed", "priority": "P0"},
+    {"id": "T-003", "title": "Build strategy runner engine", "agent": "scaffolder", "status": "completed", "priority": "P0"},
+    {"id": "T-004", "title": "Create performance metrics calculator", "agent": "scaffolder", "status": "completed", "priority": "P1"},
+    {"id": "T-005", "title": "Quality gate: Code review", "agent": "qualityguardian", "status": "completed", "priority": "P0"},
+    {"id": "T-006", "title": "Quality gate: Test coverage >80%", "agent": "qualityguardian", "status": "completed", "priority": "P0"},
+    {"id": "T-007", "title": "Validate >60% accuracy on historical data", "agent": "qualityguardian", "status": "completed", "priority": "P0"}
+  ],
+  "success_criteria": ["Backtesting engine operational", "Test coverage >80%", "Historical accuracy >60%", "Documentation complete"],
+  "results": {
+    "tests_passed": 60,
+    "coverage": "91%",
+    "files_created": 9,
+    "lines_of_code": 1683
+  },
+  "xp_reward": 150,
+  "xp_earned": 150
+}
