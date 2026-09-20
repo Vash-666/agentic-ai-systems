@@ -17,3 +17,6 @@
 [2026-09-20T20:13:06Z] [INFO] Starting health check...
 [2026-09-20T20:13:06Z] [INFO] Ollama API UP — 4 model(s) loaded, latency: 31ms
 [2026-09-20T20:13:06Z] [INFO] Health check complete
+[2026-09-20T20:18:06Z] [INFO] Starting health check...
+[2026-09-20T20:18:06Z] [INFO] Ollama API UP — 4 model(s) loaded, latency: 28ms
+[2026-09-20T20:18:06Z] [INFO] Health check complete
