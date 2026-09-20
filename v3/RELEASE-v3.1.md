@@ -13,11 +13,11 @@
 |-------|------|--------|
 | @switch | Orchestrator & Router | ✅ Active |
 | @quality | Quality Auditor | ✅ Active |
-| @memory | Memory Curator | ✅ Active |
-| @research | Research Analyst | ✅ Active |
-| @creative | Creative Writer | ✅ Active |
-| @code | Code Specialist | ✅ Active |
-| @execute | Task Executor | ✅ Active |
+| @content | Content Creator | ✅ Active |
+| @grok | Advanced Reasoning | ✅ Active |
+| @product | Product Analyst | ✅ Active |
+| @scaffolder | Project Builder | ✅ Active |
+| @ux | Experience Designer | ✅ Active |
 
 ### 6 Core Features (All Wired)
 
@@ -81,17 +81,18 @@ v3/
 ├── agents/              # Agent definitions
 │   ├── switch/
 │   ├── quality/
-│   ├── memory/
-│   ├── research/
-│   ├── creative/
-│   ├── code/
-│   └── execute/
+│   ├── content/
+│   ├── grok/
+│   ├── product/
+│   ├── scaffolder/
+│   └── ux/
 ├── scripts/             # Automation scripts
 │   ├── session-startup.sh
 │   ├── spawn-agent.sh
 │   ├── post-task-completion.sh
 │   ├── health-monitor.sh
-│   └── quality-score.sh
+│   ├── quality-score.sh
+│   └── validate-system.sh
 ├── core/                # Core consciousness files
 │   ├── SOUL.md
 │   ├── HANDOFF.md

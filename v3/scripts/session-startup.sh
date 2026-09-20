@@ -19,7 +19,22 @@ echo "  Time: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 echo "========================================"
 echo ""
 
-# Step 0: SQLite Checkpointer — load latest checkpoint
+# Step 0: Validate system integrity
+echo "[0/10] Validating system integrity..."
+VALIDATOR="$V3_DIR/scripts/validate-system.sh"
+if [ -f "$VALIDATOR" ]; then
+    if ! "$VALIDATOR" > /dev/null 2>&1; then
+        echo "  ❌ System validation failed. Run $VALIDATOR for details."
+        echo "  ⚠️  Continuing with caution..."
+    else
+        echo "  ✅ System validated"
+    fi
+else
+    echo "  ⚠️  Validator not found — skipping"
+fi
+echo ""
+
+# Step 0b: SQLite Checkpointer — load latest checkpoint
 echo "[0/10] Loading checkpoint from SQLite..."
 DB_PATH="$V3_DIR/state/state.db"
 CHECKPOINTER_ENABLED="${CHECKPOINTER_ENABLED:-true}"
