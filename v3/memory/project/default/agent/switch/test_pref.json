@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-09-18T16:56:07.956225",
+  "scope": "agent",
+  "scope_id": "switch",
+  "key": "test_pref",
+  "data": {
+    "theme": "dark",
+    "language": "en"
+  },
+  "metadata": {}
+}

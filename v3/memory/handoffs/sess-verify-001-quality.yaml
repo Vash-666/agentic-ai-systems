@@ -1,0 +1,22 @@
+---
+handoff:
+  id: "ho-1789615891-fd58d89b"
+  timestamp: "2026-09-17T03:31:31Z"
+  from: "@switch"
+  to: "@quality"
+  context:
+    task: "Verify same session"
+    goal: "Complete task successfully"
+    priority: "medium"
+  artifacts:
+    files: []
+    data: {}
+  acceptance_criteria:
+    - "Task completed"
+    - "Output validated"
+  return_path:
+    to: "@switch"
+    format: "structured_report"
+  chain:
+    - {agent: "@switch", action: "spawn", timestamp: "2026-09-17T03:31:31Z"}
+---

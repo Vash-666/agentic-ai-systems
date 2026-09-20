@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-09-18T16:56:07.956628",
+  "scope": "global",
+  "scope_id": "default",
+  "key": "test_config",
+  "data": {
+    "version": "3.1.1",
+    "debug": true
+  },
+  "metadata": {}
+}

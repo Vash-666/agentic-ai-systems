@@ -1,0 +1,16 @@
+{
+  "pointer": "1a423caa4184a41c",
+  "timestamp": "2026-09-17T03:27:02.725539",
+  "summary": "key_fact: SQLite is used for state | agents: [1 items] | history: [2 items]",
+  "original_length": 105,
+  "full_content": {
+    "key_fact": "SQLite is used for state",
+    "agents": {
+      "switch": "active"
+    },
+    "history": [
+      "event1",
+      "event2"
+    ]
+  }
+}

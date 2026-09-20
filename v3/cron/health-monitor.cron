@@ -1,0 +1,15 @@
+# Ollama Health Monitor Cron Configuration
+# Version: 3.1
+# Run health check every 5 minutes
+# Install with: crontab /Users/rohitvashist/.openclaw/workspace/v3/cron/health-monitor.cron
+# Or add individual lines to existing crontab
+
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+# Resolve V3_DIR dynamically (assumes scripts are in v3/scripts/)
+# Health monitor check every 5 minutes
+*/5 * * * * cd /Users/rohitvashist/.openclaw/workspace/v3 && ./scripts/health-monitor.sh check >> ./logs/health-monitor-cron.log 2>&1
+
+# Daily quality score tracking at 00:00 UTC
+0 0 * * * cd /Users/rohitvashist/.openclaw/workspace/v3 && ./scripts/quality-score.sh ./core/SOUL.md >> ./logs/quality-score-cron.log 2>&1
