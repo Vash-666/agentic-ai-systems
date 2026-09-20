@@ -112,8 +112,8 @@ calculate_trend() {
         return
     fi
     
-    local first="${scores[-1]}"
-    local last="${scores[0]}"
+    local first="${scores[0]}"
+    local last="${scores[${#scores[@]}-1]}"
     local diff
     diff=$(python3 -c "print(f'{float('$last') - float('$first'):.2f}')" 2>/dev/null || echo "0")
     
